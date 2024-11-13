@@ -1,8 +1,25 @@
+import { useState } from 'react'
 import './App.css'
-import { DiscoverWalletProviders } from './components/WalletProviders'
+import Header from './components/Header/Header'
+import Platform from './components/Platform'
+
 
 function App() {
-  return <DiscoverWalletProviders/>
+
+  const [selectedWallet, setSelectedWallet] = useState<EIP6963ProviderDetail>()
+  const [userAccount, setUserAccount] = useState<string>('')
+
+  return (
+    <>
+      <Header 
+        selectedWallet={selectedWallet}
+        setSelectedWallet={setSelectedWallet}
+        userAccount={userAccount}
+        setUserAccount={setUserAccount}/>
+      <main>
+      </main>
+    </>
+  )
 }
 
 export default App

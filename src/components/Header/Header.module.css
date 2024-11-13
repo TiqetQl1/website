@@ -1,0 +1,45 @@
+.top{
+    display: flex;
+    flex-flow: row nowrap;
+    white-space: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.top h1{
+    font-size: 3.5em;
+}
+
+.logout{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 8em;
+}
+.logout > *{
+    display: flex;
+    flex-flow: row;
+    justify-content: right;
+}
+.logout sub{
+    font-size: 0.8em;
+}
+
+.selectToggle{
+    text-align: center;
+    width: 8em;
+}
+
+.select{
+    display: flex;
+    flex-flow: row wrap;
+    padding: 15px;
+    gap: 15px;
+    overflow: hidden;
+}
+.select button{
+    width: clamp(10em,10em,10em);
+}
+/* .select.close{
+    display: none;
+} */
