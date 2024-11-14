@@ -31,7 +31,7 @@ export const DiscoverWalletProviders = ({setSelectedWallet,setUserAccount}) => {
               <div>{provider.info.name}</div>
             </button>
           )) }
-          {providers?.map((provider: EIP6963ProviderDetail) => (
+          {/* {providers?.map((provider: EIP6963ProviderDetail) => (
             <button key={provider.info.uuid} onClick={() => handleConnect(provider)} >
               <img src={provider.info.icon} alt={provider.info.name} />
               <div>{provider.info.name}</div>
@@ -42,7 +42,7 @@ export const DiscoverWalletProviders = ({setSelectedWallet,setUserAccount}) => {
               <img src={provider.info.icon} alt={provider.info.name} />
               <div>{provider.info.name}</div>
             </button>
-          )) }
+          )) } */}
           </>
         :
           <div>

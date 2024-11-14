@@ -1,0 +1,50 @@
+.main{
+    display: flex;
+    height: 200px;
+    flex-flow: row wrap;
+}
+
+.section{
+    margin: auto;
+    flex: 0 1 300px;
+    position: relative;
+    width: auto;
+    height: auto;
+}
+.section label{
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.section label span{
+    padding: 0 0.2em;
+}
+.svg{
+    width: auto;
+    height: auto;
+    max-height: 100%;
+}
+
+.details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 300px;
+    flex: 1 0 300px;
+}
+.details p{
+    margin: 0;
+}
+.details button{
+    flex-flow: column;
+}
+.details b{
+    color: var(--accent-color-normal);
+}

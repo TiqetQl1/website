@@ -12,6 +12,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
+
+  --accent-color-light : #747bff;
+  --accent-color-normal: #343991;
+  --accent-color-dark  : #273f54;
 }
 
 h1, h2, h3, h4, h5, h6{
