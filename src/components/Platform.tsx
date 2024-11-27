@@ -81,7 +81,7 @@ const Platform : FC<PlatformGuard> = ({wallet}) => {
     },[pool])
 
     return (
-        <div className={styles.main}>
+        <div className={styles.main + " box"}>
             <Countdown 
                 start={Date.now()-18*3600*1000}
                 end={Date.now()+6*3600*1000}

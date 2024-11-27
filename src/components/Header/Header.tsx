@@ -28,7 +28,7 @@ const Header = ({
 
     return (
         <header>
-            <nav className={styles.top}>
+            <nav className={styles.top + " box"}>
                 <h1>
                     TiQet
                 </h1>
@@ -50,11 +50,7 @@ const Header = ({
                         {isOpen ? "Close" : "Connect" }
                     </button>
                 }
-            </nav>
-            <hr />
-            {
-                isOpen &&
-                <>
+                <div className={'box '+styles.selectWalletList+' '+(isOpen && styles.open)}>
                     <h4>
                         Select Your Wallet
                     </h4>
@@ -63,9 +59,8 @@ const Header = ({
                             setSelectedWallet={setSelectedWallet}
                             setUserAccount={setUserAccount}/>
                     </div>
-                    <hr />
-                </>
-            }
+                </div>
+            </nav>
         </header>
     )
 }

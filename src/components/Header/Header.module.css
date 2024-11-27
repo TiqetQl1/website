@@ -4,9 +4,13 @@
     white-space: nowrap;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 .top h1{
-    font-size: 3.5em;
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    height: 60px;
 }
 
 .logout{
@@ -29,7 +33,52 @@
     text-align: center;
     width: 8em;
 }
-
+.selectWalletList{
+    background-color: var(--background);
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    z-index: 99;
+    transform: translateY(-25px);
+    opacity: 0;
+    transition: all 200ms;
+    animation: forwards hide 400ms;
+}
+.selectWalletList.open{
+    opacity: 1;
+    transform: translateY(-5px);
+    animation: forwards show 400ms;
+}
+@keyframes show {
+    0%{
+        opacity: 0;
+        height: 0;
+    }
+    10%{
+        display: block;
+        opacity: 0;
+        height: auto;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes hide {
+    0%{
+        height: auto;
+        opacity: 1;
+    }
+    90%{
+        height: auto;
+        opacity: 0;
+        display: none;
+    }
+    100%{
+        height: 0;
+    }
+}
 .select{
     display: flex;
     flex-flow: row wrap;
