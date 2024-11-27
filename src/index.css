@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: #213547;
-  background-color: #ffffff;
+  background-color: var(--background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
 
+  --background: #ffffff;
   --accent-color-light : #747bff;
   --accent-color-normal: #343991;
   --accent-color-dark  : #273f54;
@@ -47,7 +48,7 @@ body {
 
 h1 {
   font-size: 3.2em;
-  line-height: 1.1;
+  line-height: 1em;
 }
 
 hr {
