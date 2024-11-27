@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 780px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
   text-align: center;
 }
 
@@ -10,6 +10,14 @@ nav .top{
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+
+.box{
+  border: 1px solid var(--accent-color-dark);
+  box-shadow: 0 0 5px rgba(117, 7, 157, 0.434);
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
 }
 
 @media only screen and (max-width: 500px) {
