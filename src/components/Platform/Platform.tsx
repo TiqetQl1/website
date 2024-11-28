@@ -6,7 +6,6 @@ import Countdown from "./Countdown";
 import { formatBalance, switchChain } from "@/utils";
 import usePool from "@/hooks/usePool";
 import { Contract, ethers } from "ethers";
-import { count } from "console";
 import PoolABI from "@/statics/PoolABI";
 
 interface PlatformGuard {

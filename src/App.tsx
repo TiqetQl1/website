@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Header from './components/Header/Header'
-import Platform from './components/Platform'
+import Platform from './components/Platform/Platform'
 
 
 function App() {
