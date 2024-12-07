@@ -62,38 +62,13 @@ const PoolMakerABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "active_pools",
+		"inputs": [],
+		"name": "allActives",
 		"outputs": [
 			{
-				"internalType": "contract Pool",
+				"internalType": "contract Pool[]",
 				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "needle",
-				"type": "address"
-			}
-		],
-		"name": "admin_index",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -101,7 +76,7 @@ const PoolMakerABI = [
 	},
 	{
 		"inputs": [],
-		"name": "all_actives",
+		"name": "allArchived",
 		"outputs": [
 			{
 				"internalType": "contract Pool[]",
@@ -115,28 +90,9 @@ const PoolMakerABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "closed_pools",
-		"outputs": [
-			{
-				"internalType": "contract Pool",
-				"name": "",
+				"internalType": "address",
+				"name": "old_admin",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
 			}
 		],
 		"name": "demote",
@@ -157,9 +113,41 @@ const PoolMakerABI = [
 				"type": "bool"
 			}
 		],
-		"name": "drop_pool",
+		"name": "dropPool",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract Pool",
+				"name": "pool",
+				"type": "address"
+			}
+		],
+		"name": "importPool",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "toCheck",
+				"type": "address"
+			}
+		],
+		"name": "isAdmin",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -201,12 +189,17 @@ const PoolMakerABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "percent_per_nft",
+				"name": "cut_share",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "percent_per_winner",
+				"name": "cut_per_nft",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cut_per_winner",
 				"type": "uint256"
 			}
 		],
@@ -242,7 +235,7 @@ const PoolMakerABI = [
 				"type": "address"
 			}
 		],
-		"name": "transfer_god",
+		"name": "transferGod",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

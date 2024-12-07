@@ -18,7 +18,7 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "ticket_price_wei",
+				"name": "ticket_price_usdt",
 				"type": "uint256"
 			},
 			{
@@ -28,7 +28,7 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "max_tickets_per_participant",
+				"name": "max_tickets_of_participant",
 				"type": "uint256"
 			},
 			{
@@ -38,33 +38,22 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "percent_per_nft",
+				"name": "cut_share",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "percent_per_winner",
+				"name": "cut_per_nft",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "cut_per_winner",
 				"type": "uint256"
 			}
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "current",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "expected",
-				"type": "uint256"
-			}
-		],
-		"name": "InsufficientBalance",
-		"type": "error"
 	},
 	{
 		"inputs": [
@@ -101,12 +90,12 @@ const PoolABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "enum Pool.State",
+				"internalType": "enum Pool.Stage",
 				"name": "current",
 				"type": "uint8"
 			},
 			{
-				"internalType": "enum Pool.State",
+				"internalType": "enum Pool.Stage",
 				"name": "expected",
 				"type": "uint8"
 			}
@@ -179,26 +168,13 @@ const PoolABI = [
 		"inputs": [
 			{
 				"indexed": true,
-				"internalType": "enum Pool.State",
-				"name": "new_state",
+				"internalType": "enum Pool.Stage",
+				"name": "new_stage",
 				"type": "uint8"
 			}
 		],
-		"name": "StateChanged",
+		"name": "StageChanged",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "_organizer",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -208,7 +184,7 @@ const PoolABI = [
 				"type": "uint256"
 			}
 		],
-		"name": "buy_ticket",
+		"name": "buyTicket",
 		"outputs": [
 			{
 				"internalType": "uint256[]",
@@ -216,7 +192,7 @@ const PoolABI = [
 				"type": "uint256[]"
 			}
 		],
-		"stateMutability": "payable",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -228,7 +204,7 @@ const PoolABI = [
 	},
 	{
 		"inputs": [],
-		"name": "config",
+		"name": "configs",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -247,7 +223,7 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "ticket_price_wei",
+				"name": "ticket_price_usdt",
 				"type": "uint256"
 			},
 			{
@@ -257,7 +233,7 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "max_tickets_per_participant",
+				"name": "max_tickets_of_participant",
 				"type": "uint256"
 			},
 			{
@@ -267,18 +243,18 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "percent_per_nft",
+				"name": "cut_share",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "percent_per_winner",
+				"name": "cut_per_nft",
 				"type": "uint256"
 			},
 			{
-				"internalType": "enum Pool.State",
-				"name": "state_",
-				"type": "uint8"
+				"internalType": "uint256",
+				"name": "cut_per_winner",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -286,29 +262,59 @@ const PoolABI = [
 	},
 	{
 		"inputs": [],
-		"name": "draw_lots",
+		"name": "drawLots",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "give_prizes",
+		"name": "givePrizes",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "pool_total",
+		"name": "poolTotal",
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "balance",
 				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "results",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "nft_holders_",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "winners_",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "winners_codes_",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "retriveHolders",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -320,12 +326,22 @@ const PoolABI = [
 	},
 	{
 		"inputs": [],
-		"name": "state",
+		"name": "states",
 		"outputs": [
 			{
-				"internalType": "enum Pool.State",
-				"name": "",
+				"internalType": "enum Pool.Stage",
+				"name": "stage_",
 				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tickets_sold_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "buyers_count_",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -358,71 +374,7 @@ const PoolABI = [
 				"type": "address"
 			}
 		],
-		"name": "tickets_per_participant",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "tickets_total",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "total_participants",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "winners",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "winners_codes",
+		"name": "tickets_of_participant",
 		"outputs": [
 			{
 				"internalType": "uint256",
