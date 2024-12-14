@@ -45,6 +45,7 @@
     opacity: 0;
     transition: all 200ms;
     animation: forwards hide 400ms;
+    overflow: hidden;
 }
 .selectWalletList.open{
     opacity: 1;
