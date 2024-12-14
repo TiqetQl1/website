@@ -1,6 +1,5 @@
 .main{
     display: flex;
-    height: 200px;
     flex-flow: row wrap;
 }
 

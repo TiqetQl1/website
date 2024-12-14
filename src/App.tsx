@@ -17,8 +17,7 @@ function App() {
         userAccount={userAccount}
         setUserAccount={setUserAccount}/>
       <main>
-        <Platform 
-          wallet={selectedWallet}/>
+        <Platform selectedWallet={selectedWallet}/>
       </main>
     </>
   )
