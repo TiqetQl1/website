@@ -1,30 +1,95 @@
 import PoolABI from "@/statics/PoolABI"
-import { Configs } from "@/types/Pool"
-import { Contract, ethers } from "ethers"
+import { qusdtABI, qusdtAddress } from "@/statics/QUSDT"
+import { Configs, Results, States } from "@/types/Pool"
+import { suppressDecodeError, switchChain } from "@/utils"
+import { getMyContract, provider } from "@/utils/ether"
+import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 
-const usePool = (address: string, provider) : [Contract, Configs] => {
-    const [pool, setPool] = useState<Contract>(null)
-    const [configs, setConfigs] = useState<Configs>(null)
-    
-    useEffect(()=>{
-        if (address) {
-            setPool(new ethers.Contract(address, PoolABI, provider))
-        }
-    },[address])
+const usePool = (address: string) => {
+    const contract_read = new ethers.Contract(address, PoolABI, provider.provider)
+    const [results, setResults] = useState<Results>()
+    const [configs, setConfigs] = useState<Configs>()
+    const [states,  setStates ] = useState<States>()
+
+    const reloadStates = () => {
+        contract_read.results()
+            .catch(_err=>suppressDecodeError(_err))
+            .then(res=>setResults(res))
+        contract_read.states()
+            .catch(_err=>suppressDecodeError(_err))
+            .then(res=>setStates(res))
+    }
 
     useEffect(() => {
-        if (pool) {
-            pool.config()
-                .then(res=>setConfigs(res))
+        contract_read.configs()
+            .catch(_err=>suppressDecodeError(_err))
+            .then(res=>setConfigs(res))
+        reloadStates()
+        setInterval(reloadStates, 10000)
+    },[])
+
+    const requestUSDTAllowance = async (wallet: EIP6963ProviderDetail, amount: bigint) => {
+        if (!wallet?.provider) {
+            return false
         }
-    },[pool])
+        const qUSDT = await getMyContract(wallet, qusdtAddress, qusdtABI)
+        const spender = address;
+        const res = await qUSDT.approve(spender, amount)
+        console.log(res)
+        return res
+    }
 
-    useEffect(()=>{
-        console.log(configs?.organizer ? configs : " not yet ")
-    },[configs])
+    const buy = async (wallet: EIP6963ProviderDetail, count: bigint) => {
+        console.log("start of buy :")
+        console.log("checking wallet")
+        if (!wallet?.provider) {
+            console.log("wallet not valid")
+            return false
+        }
+        console.log("swiching chain")
+        switchChain(wallet)
+        console.log("making amount")
+        const amount = BigInt(count) * configs.ticket_price_usdt
+        console.log("requesting allowance")
+        if (! await requestUSDTAllowance(wallet, amount)){
+            console.log("failed")
+            return false;
+        }
+        console.log("making contract")
+        const my_contract = await getMyContract(wallet, address, PoolABI)
+        console.log("calling buy")
+        const res = await my_contract.buyTicket(count)
+        console.log(res)
+        console.log("--- end of buy")
+        return true
+    }
 
-    return [pool, configs]
+    const getMyTicketsCount = async (wallet: EIP6963ProviderDetail) => {
+        if (!wallet?.provider) {
+            return 0n
+        }
+        const accounts: string[] | undefined =
+            await (
+                wallet.provider
+                    .request({ method: 'eth_requestAccounts' })
+                    .catch(console.error)
+            ) as string[] | undefined;
+        console.log("account : ", accounts[0])
+        return BigInt(await contract_read.tickets_of_participant(accounts[0]))
+    }
+
+    return {
+        pool: {
+            address:    address,
+            contract:   contract_read,
+            configs:    configs,
+            states:     states,
+            results:    results,
+        },
+        buy: buy,
+        getMyTicketsCount: getMyTicketsCount
+    }
 }
 
 export default usePool

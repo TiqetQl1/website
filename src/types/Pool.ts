@@ -28,7 +28,13 @@ export type Results = {
 export type Pool = {
     address: string,
     contract: Contract,
-    config: Configs,
-    state: States,
-    results: Results,
+    configs: Configs,
+    states: States,
+    results: Results
+}
+
+export type usePoolReturnType = {
+    pool: Pool,
+    buy: (wallet: EIP6963ProviderDetail, count: bigint)=>Promise<boolean>
+    getMyTicketsCount: (wallet: EIP6963ProviderDetail )=>Promise<bigint>
 }
