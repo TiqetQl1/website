@@ -57,3 +57,11 @@ export const formatTime = (time) : TimeSegments => {
   const milliseconds = String(time % 100).padStart(2, "0")
   return {hours, minutes, seconds, milliseconds};
 }
+
+export const suppressDecodeError = (error) =>{
+  if (error.message.includes("could not decode result data ")) {
+    // console.warn("Suppressed decoding error:", error.message);
+  } else {
+    throw error; // Re-throw if it's a different error
+  }
+}
