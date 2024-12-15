@@ -14,15 +14,15 @@ export type Configs = {
 }
 
 export type States = {
-    stage: number,
-    tickets_sold: bigint,
-    buyers_count: bigint
+    stage_: bigint,
+    tickets_sold_: bigint,
+    buyers_count_: bigint
 }
 
 export type Results = {
-    nft_holders: string[],
-    winners: string[],
-    winners_codes: bigint[]
+    nft_holders_: string[],
+    winners_: string[],
+    winners_codes_: bigint[]
 }
 
 export type Pool = {
