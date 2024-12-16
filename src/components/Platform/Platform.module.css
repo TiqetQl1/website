@@ -1,49 +1,26 @@
-.main{
-    display: flex;
-    flex-flow: row wrap;
+.slick-track{
+    height: calc(min-content + 100px);
 }
 
-.section{
-    margin: auto;
-    flex: 0 1 300px;
-    position: relative;
-    width: auto;
-    height: auto;
-}
-.section label{
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-flow: column;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-}
-.section label span{
-    padding: 0 0.2em;
-}
-.svg{
-    width: auto;
-    height: auto;
-    max-height: 100%;
+.platform{
+    margin: 40px auto;
 }
 
-.details{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-    width: 300px;
-    flex: 1 0 300px;
+:global(.singlePool){
+    box-sizing: border-box;
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 40px 0;
+    border-radius: 28px;
+    transform: scale(0.75);
+    transition: 200ms;
+    box-shadow: 0 0 40px var(--box-shadow);
 }
-.details p{
-    margin: 0;
+:global(.slick-current){
+    box-sizing: border-box;
+    padding: 12px;
 }
-.details button{
-    flex-flow: column;
-}
-.details b{
-    color: var(--accent-color-normal);
+:global(.slick-current .singlePool){
+    transition: 200ms;
+    transform: scale(1);
 }

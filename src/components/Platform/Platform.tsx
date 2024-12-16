@@ -1,11 +1,12 @@
-import { Pool } from "@/types/Pool"
+import styles from "./Platform.module.css"
 import { FC, useEffect, useState } from "react"
 import SinglePool from "./SinglePool"
-import usePool from "@/hooks/usePool"
-import { ethers } from "ethers"
-import { address, chainData } from "@/statics/poolMakerData"
-import PoolMakerABI from "@/statics/PoolMakerABI"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { poolMakerContract } from "@/utils/ether"
+import usePool from "@/hooks/usePool";
+import { Pool, usePoolReturnType } from "@/types/Pool";
 
 interface PlatformGuard {
     selectedWallet: EIP6963ProviderDetail
@@ -13,32 +14,47 @@ interface PlatformGuard {
 
 const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
     const [loading, setLoading] = useState<boolean>(true)
-    const [pools, setPools] = useState<string[]>([])
+    const [pools, setPools] = useState<usePoolReturnType[]>([])
 
+    const settings = {
+        className: "center",
+        infinite: true,
+        centerMode: true,
+        centerPadding: "0",
+        slidesToShow: 1,
+        swipeToSlide: true,
+        afterChange: function(index) {
+          console.log(
+            `Slider Changed to: ${index + 1}`
+          );
+        }
+      };
 
     useEffect(()=>{
         poolMakerContract
             .allActives()
                 .then(res=>{
                     console.log(res)
-                    setPools(res)
+                    setPools(res.map(i=> usePool(i)))
                 })
                 .finally(()=>setLoading(false))
     },[])
 
     return (
-        <>
+        <section className={styles.platform}>
             {
                 loading
                 ? <SinglePool text="Retriving active pools ..."/>
                 : pools.length>0
-                    ? pools.map(
-                        pool_address => 
-                            <SinglePool key={pool_address} wallet={selectedWallet} pool_address={pool_address}/>
-                    )
+                    ? <Slider {...settings} className={styles.slick}>
+                        {pools.map(
+                            item => 
+                                <SinglePool key={item.pool.address} wallet={selectedWallet} pool_address={item.pool.address}/>
+                        )}
+                    </Slider>
                     : <SinglePool text="There are no active pools :("/>
             }
-        </>
+        </section>
     )
 }
 

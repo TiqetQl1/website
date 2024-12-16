@@ -1,33 +1,15 @@
 import PoolABI from "@/statics/PoolABI"
 import { qusdtABI, qusdtAddress } from "@/statics/QUSDT"
 import { Configs, Results, States } from "@/types/Pool"
-import { suppressDecodeError, switchChain } from "@/utils"
+import { switchChain } from "@/utils"
 import { getMyContract, provider } from "@/utils/ether"
 import { ethers } from "ethers"
-import { useEffect, useState } from "react"
 
 const usePool = (address: string) => {
     const contract_read = new ethers.Contract(address, PoolABI, provider.provider)
-    const [results, setResults] = useState<Results>()
-    const [configs, setConfigs] = useState<Configs>()
-    const [states,  setStates ] = useState<States>()
-
-    const reloadStates = () => {
-        contract_read.results()
-            .catch(_err=>suppressDecodeError(_err))
-            .then(res=>setResults(res))
-        contract_read.states()
-            .catch(_err=>suppressDecodeError(_err))
-            .then(res=>setStates(res))
-    }
-
-    useEffect(() => {
-        contract_read.configs()
-            .catch(_err=>suppressDecodeError(_err))
-            .then(res=>setConfigs(res))
-        reloadStates()
-        setInterval(reloadStates, 10000)
-    },[])
+    const states  : () => Promise<States>  = async () => await contract_read.states()
+    const results : () => Promise<Results> = async () => await contract_read.results()
+    const configs : () => Promise<Configs> = async () => await contract_read.configs()
 
     const requestUSDTAllowance = async (wallet: EIP6963ProviderDetail, amount: bigint) => {
         if (!wallet?.provider) {
@@ -40,7 +22,7 @@ const usePool = (address: string) => {
         return res
     }
 
-    const buy = async (wallet: EIP6963ProviderDetail, count: bigint) => {
+    const buy = async (wallet: EIP6963ProviderDetail, count: bigint, price: bigint) => {
         console.log("start of buy :")
         console.log("checking wallet")
         if (!wallet?.provider) {
@@ -50,7 +32,7 @@ const usePool = (address: string) => {
         console.log("swiching chain")
         switchChain(wallet)
         console.log("making amount")
-        const amount = BigInt(count) * configs.ticket_price_usdt
+        const amount = BigInt(count) * price
         console.log("requesting allowance")
         if (! await requestUSDTAllowance(wallet, amount)){
             console.log("failed")

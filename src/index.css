@@ -1,3 +1,6 @@
+html, body, #root{
+  overflow-x: hidden;
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -14,6 +17,9 @@
   text-align: left;
 
   --background: #ffffff;
+  --background-secondary: #F2F2F7;
+  --box-shadow: #bbb;
+  --yellow: #FFCC00;
   --accent-color-light : #747bff;
   --accent-color-normal: #343991;
   --accent-color-dark  : #273f54;
@@ -60,6 +66,13 @@ hr {
   border-bottom: 1px solid #75079d;
 }
 
+button,
+button:focus,
+button:focus-within,
+button:focus-visible{
+  outline: 0;
+  border: 1px solid transparent;
+}
 button {
   display: flex;
   white-space: nowrap;
@@ -67,7 +80,7 @@ button {
   justify-content: ce;
 
   align-items: center;
-  border-radius: 0.5em;
+  border-radius: 16px;
   padding: 0.6em 1.2em;
 
   font-family: inherit;
@@ -77,8 +90,9 @@ button {
   cursor: pointer;
 
   transition: border-color 0.25s;
-  border: 1px solid transparent;
   background-color: #f9f9f9;
+  border: 1px solid transparent;
+  transition: all 200ms;
 }
 button > img {
   width: 1.5em;
@@ -86,9 +100,6 @@ button > img {
   margin-right: 1em;
 }
 button:hover {
-  border-color: #75079d;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--background);
 }

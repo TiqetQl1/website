@@ -1,15 +1,9 @@
 #root {
   width: 100%;
-  max-width: 780px;
+  min-height: 100vh;
+  overflow-x: hidden;
   margin: 0 auto;
-  padding: 2rem 1rem;
   text-align: center;
-}
-
-nav .top{
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
 }
 
 .box{
