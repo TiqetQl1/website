@@ -10,9 +10,9 @@ export const formatChainAsNum = (chainIdHex: string) => {
   return chainIdNum
 }
 
-export const formatAddress = (addr: string) => {
+export const formatAddress = (addr: string, show: number = 3) => {
   const upperAfterLastTwo = addr.slice(0,2) + addr.slice(2)
-  return `${upperAfterLastTwo.substring(0, 5)}...${upperAfterLastTwo.substring(39)}`
+  return `${upperAfterLastTwo.substring(0, show+2)}...${upperAfterLastTwo.substring(addr.length-show)}`
 }
 
 export const switchChain = async (wallet: EIP6963ProviderDetail) => {
@@ -43,19 +43,16 @@ export const switchChain = async (wallet: EIP6963ProviderDetail) => {
   }
 }
 
-type TimeSegments = {
+export type TimeSegments = {
   hours: string,
   minutes: string,
   seconds: string,
-  milliseconds: string,
 }
 export const formatTime = (time) : TimeSegments => {
-  time = (time/10).toFixed()
-  const hours   = String(Math.floor(time / 360000)).padStart(2,"0")
-  const minutes = String(Math.floor((time % 360000) / 6000)).padStart(2, "0")
-  const seconds = String(Math.floor((time % 6000) / 100)).padStart(2, "0")
-  const milliseconds = String(time % 100).padStart(2, "0")
-  return {hours, minutes, seconds, milliseconds};
+  const hours   = String(Math.floor(time / 3600)).padStart(2,"0")
+  const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, "0")
+  const seconds = String(Math.floor(time % 60)).padStart(2, "0")
+  return {hours, minutes, seconds};
 }
 
 export const suppressDecodeError = (error) =>{
@@ -64,4 +61,12 @@ export const suppressDecodeError = (error) =>{
   } else {
     throw error; // Re-throw if it's a different error
   }
+}
+
+export const bigIntToFixed = (value: bigint, decimals: number): string => {
+  const strValue = value.toString(); // Convert to string
+  const padded = strValue.padStart(decimals + 1, "0"); // Add leading zeros if necessary
+  const whole = padded.slice(0, -decimals); // Whole part
+  const fractional = padded.slice(-decimals); // Fractional part
+  return `${whole}.${fractional}`;
 }

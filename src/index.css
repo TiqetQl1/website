@@ -1,6 +1,9 @@
 html, body, #root{
   overflow-x: hidden;
 }
+*{
+  color: #213547;
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -19,7 +22,8 @@ html, body, #root{
   --background: #ffffff;
   --background-secondary: #F2F2F7;
   --box-shadow: #bbb;
-  --yellow: #FFCC00;
+  --yellow: #34C759;
+  --green : #FFCC00;
   --accent-color-light : #747bff;
   --accent-color-normal: #343991;
   --accent-color-dark  : #273f54;
@@ -49,7 +53,16 @@ body {
   margin: 0;
   display: flex;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh; 
+  background: rgb(191,191,191);
+  background: radial-gradient(circle, rgba(191,191,191,1) 10%, rgba(236,236,236,1) 50%, rgba(242,242,247,1) 75%, rgba(242,242,247,1) 100%); 
+}
+
+@media only screen and (max-width : 600px) {
+  body{
+    background: rgb(191,191,191);
+    background: linear-gradient(180deg, rgba(191,191,191,1) 10%, rgba(236,236,236,1) 75%, rgba(242,242,247,1) 90%, rgba(242,242,247,1) 100%);  
+  }
 }
 
 h1 {

@@ -26,19 +26,14 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
         centerPadding: "0",
         slidesToShow: 1,
         swipeToSlide: true,
-        afterChange: function(index) {
-            setSlide(index)
-          console.log(
-            `Slider Changed to: ${index + 1}`
-          );
-        }
+        beforeChange: (_now, next)=>setSlide(next)
       };
 
     useEffect(()=>{
         poolMakerContract
             .allActives()
                 .then(res=>{
-                    console.log(res)
+                    // console.log(res)
                     setPools(res.map(i=> usePool(i)))
                 })
                 .finally(()=>setLoading(false))
@@ -71,14 +66,12 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                     Legacy pools
                 </div>
                 <div className={styles.dots}>
-                    {pools.map((item, index)=>
-                        {console.log(index, slide)
-                        return <Dot 
+                    {pools.map((item, index)=> 
+                        <Dot 
                             key={index}
                             pool={item.pool} 
                             isActive={slide===index}
-                            clickHandler={()=>sliderRef.current.slickGoTo(index)}/>}
-                    )}
+                            clickHandler={()=>sliderRef.current.slickGoTo(index)}/>)}
                 </div>
             </section>
         </>

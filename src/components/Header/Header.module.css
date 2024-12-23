@@ -14,6 +14,11 @@ header{
     margin: 40px auto;
     padding: 20px 24px;
 }
+@media only screen and (max-width : 600px) {
+    .top{
+        margin: 10px auto;
+    }
+}
 .top h1{
     font-size: 57px;
     line-height: 64px;
