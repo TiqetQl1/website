@@ -10,7 +10,7 @@ type DotGuard = {
 
 const Dot : FC<DotGuard> = ({pool , isActive, clickHandler}) => {
     const [states, setStates] = useState<States>()
-    const transform = isActive&&"scale(1.5)"
+    const transform = isActive?"scale(1.5)":"scale(1.0)"
     const backgroundColor = 
         (!states?.stage_||states.stage_==0n) 
             ? "var(--box-shadow)" 
@@ -25,7 +25,7 @@ const Dot : FC<DotGuard> = ({pool , isActive, clickHandler}) => {
 
     return (
         <div
-            className={isActive&&"active"}
+            className={isActive?"active":undefined}
             onClick={clickHandler}>
             <i style={{transform:transform, backgroundColor:backgroundColor}}>
                 &nbsp;
