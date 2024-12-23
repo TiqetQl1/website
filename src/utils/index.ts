@@ -44,15 +44,17 @@ export const switchChain = async (wallet: EIP6963ProviderDetail) => {
 }
 
 export type TimeSegments = {
+  days: string,
   hours: string,
   minutes: string,
   seconds: string,
 }
 export const formatTime = (time) : TimeSegments => {
-  const hours   = String(Math.floor(time / 3600)).padStart(2,"0")
+  const days    = String(Math.floor(time / 3600 / 24 ))
+  const hours   = String(Math.floor(time / 3600) % 24).padStart(2,"0")
   const minutes = String(Math.floor((time % 3600) / 60)).padStart(2, "0")
   const seconds = String(Math.floor(time % 60)).padStart(2, "0")
-  return {hours, minutes, seconds};
+  return {days, hours, minutes, seconds};
 }
 
 export const suppressDecodeError = (error) =>{
