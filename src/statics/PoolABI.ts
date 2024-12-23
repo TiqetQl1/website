@@ -28,6 +28,11 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
+				"name": "max_participants",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "max_tickets_of_participant",
 				"type": "uint256"
 			},
@@ -69,6 +74,11 @@ const PoolABI = [
 			}
 		],
 		"name": "IntervalNotEnded",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "LimitOfParticipents",
 		"type": "error"
 	},
 	{
@@ -233,6 +243,11 @@ const PoolABI = [
 			},
 			{
 				"internalType": "uint256",
+				"name": "max_participants",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
 				"name": "max_tickets_of_participant",
 				"type": "uint256"
 			},
@@ -305,6 +320,11 @@ const PoolABI = [
 				"internalType": "uint256[]",
 				"name": "winners_codes_",
 				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "max_raised_",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -341,6 +361,11 @@ const PoolABI = [
 			{
 				"internalType": "uint256",
 				"name": "buyers_count_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "raised_",
 				"type": "uint256"
 			}
 		],

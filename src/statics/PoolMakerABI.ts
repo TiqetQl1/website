@@ -169,7 +169,7 @@ const PoolMakerABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "ticket_price_wei",
+				"name": "ticket_price_usdt",
 				"type": "uint256"
 			},
 			{
@@ -179,7 +179,12 @@ const PoolMakerABI = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "max_tickets_per_participant",
+				"name": "max_participants",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "max_tickets_of_participant",
 				"type": "uint256"
 			},
 			{
