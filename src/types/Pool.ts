@@ -34,9 +34,3 @@ export type Pool = {
     states : ()=>Promise<States>,
     results: ()=>Promise<Results>
 }
-
-export type usePoolReturnType = {
-    pool: Pool,
-    buy: (wallet: EIP6963ProviderDetail, count: bigint, price: bigint)=>Promise<boolean>
-    getMyTicketsCount: (wallet: EIP6963ProviderDetail )=>Promise<bigint>
-}

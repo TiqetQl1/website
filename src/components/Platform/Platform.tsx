@@ -5,8 +5,8 @@ import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { poolMakerContract } from "@/utils/ether"
-import usePool from "@/hooks/usePool";
-import { Pool, usePoolReturnType } from "@/types/Pool";
+import usePool, { usePoolReturnType } from "@/hooks/usePool";
+import { Pool } from "@/types/Pool";
 import Dot from "./Dot";
 
 interface PlatformGuard {

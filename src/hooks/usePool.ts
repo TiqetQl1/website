@@ -1,9 +1,15 @@
 import PoolABI from "@/statics/PoolABI"
 import { qusdtABI, qusdtAddress } from "@/statics/QUSDT"
-import { Configs, Results, States } from "@/types/Pool"
+import { Configs, Pool, Results, States } from "@/types/Pool"
 import { switchChain } from "@/utils"
 import { getMyContract, provider } from "@/utils/ether"
 import { ethers } from "ethers"
+
+export type usePoolReturnType = {
+    pool: Pool,
+    buy: (wallet: EIP6963ProviderDetail, count: bigint, price: bigint)=>Promise<boolean>
+    getMyTicketsCount: (wallet: EIP6963ProviderDetail )=>Promise<bigint>
+}
 
 const usePool = (address: string) => {
     const contract_read = new ethers.Contract(address, PoolABI, provider.provider)

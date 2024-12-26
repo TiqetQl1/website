@@ -1,7 +1,7 @@
-import usePool from "@/hooks/usePool"
+import usePool, { usePoolReturnType } from "@/hooks/usePool"
 import styles from "./Platform.module.css"
 import { FC, useEffect, useRef, useState } from "react"
-import { Configs, Results, States, usePoolReturnType } from "@/types/Pool"
+import { Configs, Results, States } from "@/types/Pool"
 import { bigIntToFixed, formatAddress, formatTime, suppressDecodeError, TimeSegments } from "@/utils"
 
 interface SinglePoolGuard {
