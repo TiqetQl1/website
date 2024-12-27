@@ -2,6 +2,8 @@ import usePool, { usePoolReturnType } from "@/hooks/usePool"
 import styles from "./Platform.module.css"
 import { FC, useEffect, useRef, useState } from "react"
 import { bigIntToFixed, formatAddress, TimeSegments } from "@/utils"
+import useData from "@/hooks/useData"
+import { Configs, Results, States } from "@/types/Pool"
 
 interface SinglePoolGuard {
     wallet?: EIP6963ProviderDetail,
@@ -19,6 +21,9 @@ const SinglePool
     const {pool, buy, getMyTicketsCount} : usePoolReturnType = usePool(pool_address)
     const [myTickets, setMyTickets] = useState<bigint>(0n)
     const [remTime, setRemTime] = useState<TimeSegments>(null)
+    const [configs, isLoadingConfigs ,retryConfigs] = useData<Configs>(pool.configs)
+    const [states , isLoadingStates  ,retryStates ] = useData<States> (pool.states )
+    const [results, isLoadingResults ,retryResults] = useData<Results>(pool.results)
     const countInputRef = useRef(null)
 
     const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
