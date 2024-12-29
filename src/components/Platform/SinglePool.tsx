@@ -1,4 +1,4 @@
-import usePool, { usePoolReturnType } from "@/hooks/usePool"
+import usePool from "@/hooks/usePool"
 import styles from "./Platform.module.css"
 import { FC, useEffect, useRef, useState } from "react"
 import { bigIntToFixed, formatAddress, TimeSegments } from "@/utils"
@@ -18,7 +18,7 @@ const SinglePool
         pool_address="0x0000000000000000000000000000000000000000", 
         text=null
     }) => {
-    const {pool, buy, getMyTicketsCount} : usePoolReturnType = usePool(pool_address)
+    const [pool, buy, getMyTicketsCount] = usePool(pool_address)
     const [myTickets, setMyTickets] = useState<bigint>(0n)
     const [remTime, setRemTime] = useState<TimeSegments>(null)
     const [configs, isLoadingConfigs ,retryConfigs] = useData<Configs>(pool.configs)

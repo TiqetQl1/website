@@ -5,11 +5,11 @@ import { switchChain } from "@/utils"
 import { getMyContract, provider } from "@/utils/ether"
 import { ethers } from "ethers"
 
-export type usePoolReturnType = {
-    pool: Pool,
-    buy: (wallet: EIP6963ProviderDetail, count: bigint, price: bigint)=>Promise<boolean>
-    getMyTicketsCount: (wallet: EIP6963ProviderDetail )=>Promise<bigint>
-}
+type usePoolReturnType = [
+    Pool,
+    (wallet: EIP6963ProviderDetail, count: bigint, price: bigint)=>Promise<boolean>,
+    (wallet: EIP6963ProviderDetail )=>Promise<bigint>
+]
 
 const usePool = (address: string) => {
     const contract_read = new ethers.Contract(address, PoolABI, provider.provider)
@@ -67,17 +67,18 @@ const usePool = (address: string) => {
         return BigInt(await contract_read.tickets_of_participant(accounts[0]))
     }
 
-    return {
-        pool: {
+    const res : usePoolReturnType = [
+        {
             address:    address,
             contract:   contract_read,
             configs:    configs,
             states:     states,
             results:    results,
         },
-        buy: buy,
-        getMyTicketsCount: getMyTicketsCount
-    }
+        buy,
+        getMyTicketsCount
+    ]
+    return res
 }
 
 export default usePool
