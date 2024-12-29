@@ -1,21 +1,20 @@
 import styles from "./Platform.module.css"
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, useRef, useState } from "react"
 import SinglePool from "./SinglePool"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { poolMakerContract } from "@/utils/ether"
-import usePool, { usePoolReturnType } from "@/hooks/usePool";
-import { Pool } from "@/types/Pool";
+import { poolMakerContract, provider } from "@/utils/ether"
 import Dot from "./Dot";
+import useData from "@/hooks/useData";
+import usePool from "@/hooks/usePool";
 
 interface PlatformGuard {
     selectedWallet: EIP6963ProviderDetail
 }
 
 const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
-    const [loading, setLoading] = useState<boolean>(true)
-    const [pools, setPools] = useState<usePoolReturnType[]>([])
+    const [pools, isLoading ,retryPools] = useData<string[]>(poolMakerContract.allActives, 5)
     const [slide, setSlide] = useState<number>(0)
     let sliderRef = useRef(null)
 
@@ -29,21 +28,11 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
         beforeChange: (_now, next)=>setSlide(next)
       };
 
-    useEffect(()=>{
-        poolMakerContract
-            .allActives()
-                .then(res=>{
-                    // console.log(res)
-                    setPools(res.map(i=> usePool(i)))
-                })
-                .finally(()=>setLoading(false))
-    },[])
-
     return (
         <>
             <section className={styles.platform}>
                 {
-                    loading
+                    isLoading
                     ? <SinglePool text="Retriving active pools ..."/>
                     : pools.length>0
                         ? <Slider 
@@ -51,11 +40,11 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                             className={styles.slick} 
                             ref={sliderRef}>
                             {pools.map(
-                                item => 
+                                address => 
                                     <SinglePool 
-                                        key={item.pool.address} 
+                                        key={address} 
                                         wallet={selectedWallet} 
-                                        pool_address={item.pool.address}/>
+                                        pool_address={address}/>
                             )}
                         </Slider>
                         : <SinglePool text="There are no active pools :("/>
@@ -66,12 +55,16 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                     Legacy pools
                 </div>
                 <div className={styles.dots}>
-                    {pools.map((item, index)=> 
-                        <Dot 
-                            key={index}
-                            pool={item.pool} 
-                            isActive={slide===index}
-                            clickHandler={()=>sliderRef.current.slickGoTo(index)}/>)}
+                    { isLoading ? '' : pools.map((address, index)=> 
+                        {
+                            const [pool, _1, _2] = usePool(address)
+                            return <Dot 
+                                key={index}
+                                pool={pool} 
+                                isActive={slide===index}
+                                clickHandler={()=>sliderRef.current.slickGoTo(index)}/>
+                        }
+                    )}
                 </div>
             </section>
         </>
