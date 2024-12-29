@@ -56,7 +56,7 @@ header{
     width: 100vw;
     left: 0;
     top: 100%;
-    z-index: 99;
+    z-index: -99;
     transform: translateY(-25px);
     opacity: 0;
     transition: all 200ms;
@@ -71,6 +71,7 @@ header{
     margin: auto;
 }
 .selectWalletList.open{
+    z-index: 99;
     opacity: 1;
     transform: translateY(5px);
     animation: forwards show 400ms;
