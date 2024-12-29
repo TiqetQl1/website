@@ -4,6 +4,7 @@ import { FC, useEffect, useRef, useState } from "react"
 import { bigIntToFixed, formatAddress, TimeSegments } from "@/utils"
 import useData from "@/hooks/useData"
 import { Configs, Results, States } from "@/types/Pool"
+import SinglePoolSkeleton from "./SinglePoolSkeleton"
 
 interface SinglePoolGuard {
     wallet?: EIP6963ProviderDetail,
@@ -20,7 +21,6 @@ const SinglePool
     }) => {
     const [pool, buy, getMyTicketsCount] = usePool(pool_address)
     const [myTickets, setMyTickets] = useState<bigint>(0n)
-    const [remTime, setRemTime] = useState<TimeSegments>(null)
     const [configs, isLoadingConfigs ,retryConfigs] = useData<Configs>(pool.configs)
     const [states , isLoadingStates  ,retryStates ] = useData<States> (pool.states )
     const [results, isLoadingResults ,retryResults] = useData<Results>(pool.results)
@@ -40,6 +40,8 @@ const SinglePool
         reloadMyTickets()
     },[,wallet])
 
+    if(isLoadingConfigs && !(configs?.organizer)) 
+        return <SinglePoolSkeleton />
 
     return (
         <div className={styles.singlePool}>
