@@ -14,7 +14,8 @@ interface PlatformGuard {
 }
 
 const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
-    const [pools, isLoading ,retryPools] = useData<string[]>(poolMakerContract.allActives, 5)
+    const [pools, isLoading ,retryPools] 
+        = useData<string[]>(poolMakerContract.allActives, 5)
     const [slide, setSlide] = useState<number>(0)
     let sliderRef = useRef(null)
 
@@ -32,22 +33,25 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
         <>
             <section className={styles.platform}>
                 {
-                    isLoading
-                    ? <SinglePool text="Retriving active pools ..."/>
-                    : pools.length>0
-                        ? <Slider 
-                            {...settings} 
-                            className={styles.slick} 
-                            ref={sliderRef}>
-                            {pools.map(
-                                address => 
-                                    <SinglePool 
-                                        key={address} 
-                                        wallet={selectedWallet} 
-                                        pool_address={address}/>
-                            )}
-                        </Slider>
-                        : <SinglePool text="There are no active pools :("/>
+                    pools?.length 
+                        ? (pools.length>0
+                            ? <Slider 
+                                {...settings} 
+                                className={styles.slick} 
+                                ref={sliderRef}>
+                                {pools.map(
+                                    address => 
+                                        <SinglePool 
+                                            key={address} 
+                                            wallet={selectedWallet} 
+                                            pool_address={address}/>
+                                )}
+                            </Slider>
+                            : "There are not any pools :("
+                        ) : (isLoading 
+                                ? "Retriving pools ..." 
+                                : <button onClick={retryPools}>Refresh</button>
+                            )
                 }
             </section>
             <section className={styles.pagination}>
@@ -55,7 +59,7 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                     Legacy pools
                 </div>
                 <div className={styles.dots}>
-                    { isLoading ? '' : pools.map((address, index)=> 
+                    { pools?.length ? pools.map((address, index)=> 
                         {
                             const [pool, _1, _2] = usePool(address)
                             return <Dot 
@@ -64,7 +68,8 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                                 isActive={slide===index}
                                 clickHandler={()=>sliderRef.current.slickGoTo(index)}/>
                         }
-                    )}
+                    )
+                    : (isLoading ? "Loading ..." : "Unexpected")}
                 </div>
             </section>
         </>
