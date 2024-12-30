@@ -21,7 +21,7 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
 
     const settings = {
         className: "center",
-        infinite: true,
+        infinite: false,
         centerMode: true,
         centerPadding: "0",
         slidesToShow: 1,
