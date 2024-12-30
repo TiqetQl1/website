@@ -6,6 +6,7 @@ export type Configs = {
     time_start : bigint,
     ticket_price_usdt: bigint,
     max_tickets_total : bigint,
+    max_participants : bigint,
     max_tickets_of_participant : bigint,
     winners_count : bigint,
     cut_share: bigint,
