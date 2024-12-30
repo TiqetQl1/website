@@ -28,3 +28,7 @@ type EIP6963AnnounceProviderEvent = {
     provider: EIP1193Provider
   }
 }
+
+BigInt.prototype.toJSON = function () {
+  return Number(this);
+};
