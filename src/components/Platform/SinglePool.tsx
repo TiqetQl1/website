@@ -6,6 +6,7 @@ import useData from "@/hooks/useData"
 import { Configs, Results, States } from "@/types/Pool"
 import SinglePoolSkeleton from "./SinglePoolSkeleton"
 import Header from "./Components/Header"
+import Bar from "./Components/Bar"
 
 interface SinglePoolGuard {
     wallet?: EIP6963ProviderDetail,
@@ -45,13 +46,27 @@ const SinglePool
         return <SinglePoolSkeleton />
 
     return (
-        <div className={styles.singlePool}>
+        <div className={
+                styles.singlePool+' '+
+                (states?.stage_==1n ? styles.active : '')}>
             {/* Total raised money w/ remaining time */}
             <Header 
                 configs={configs} 
                 states={states} 
                 results={results} />
             {/* Bars */}
+            <Bar 
+                label="Participents"
+                current={states?.buyers_count_} 
+                maximum={configs.max_participants} />
+            <Bar 
+                label="Tiqets sold"
+                current={states?.tickets_sold_} 
+                maximum={configs.max_tickets_total} />
+            <Bar 
+                label="Your tiqets"
+                current={myTickets} 
+                maximum={configs.max_tickets_of_participant} />
             {/* Buy button */}
             {/* Address */}
             <div className={styles.address}>

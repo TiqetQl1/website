@@ -55,6 +55,44 @@
 .color *{
     color: var(--theme);
 }
+/** Bars **/
+.wrapper{
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--background-secondary);
+    box-shadow: 0 0 4px var(--box-shadow);
+    border: 1px solid var(--box-shadow);
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 16px;
+}
+.fill{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    display: block;
+    z-index: -1;
+}
+.text{
+    text-align: right;
+}
+.label{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.text,
+.text *{
+    font-size: 11px;
+    line-height: 16px;
+    font-weight:bold;
+}
+/** End of Bars **/
 .address{
     font-size: 12px;
     color: var(--box-shadow);
