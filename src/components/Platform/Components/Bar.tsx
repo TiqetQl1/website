@@ -16,7 +16,7 @@ const Bar : FC<BarGuard> = ({label, current, maximum}) => {
 
     const width = limitNum==0n 
         ? 0
-        : (Math.max((Number(current) / Number(limitNum)), 1)*100).toFixed()
+        : (Math.min((Number(current) / Number(limitNum)), 1)*100).toFixed()
 
     return <div className={styles.wrapper}>
         <div className={styles.fill} style={{width:width+"%"}}>&nbsp;</div>
