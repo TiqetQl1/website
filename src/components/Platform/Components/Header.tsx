@@ -3,6 +3,7 @@ import { FC, useState } from "react"
 import Skeleton from "react-loading-skeleton"
 import styles from "../Platform.module.css"
 import Countdown from "./Countdown"
+import { bigIntToFixed } from "@/utils"
 
 type HeaderGuard = {configs: Configs, states: States, results: Results}
 const Header : FC<HeaderGuard> = ({configs, states, results}) => {
@@ -28,7 +29,7 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
             <div className={styles.normal}>
                 Starts
             </div>
-            <div style={{position:"relative"}} className={styles.big + ' ' + styles.yellow}>
+            <div style={{position:"relative"}} className={styles.big + ' ' + styles.color}>
                 <div className={styles.crossed}><del>00:00:00</del></div>
                 Any moment now
             </div>
@@ -41,7 +42,7 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
                 </div>
                 <div 
                     style={{position:"relative"}} 
-                    className={styles.big + ' ' + styles.yellow}>
+                    className={styles.big + ' ' + styles.color}>
                     <Countdown 
                         end={parseInt(configs.time_end.toString())} 
                         onComplete={rerender}/>
@@ -52,10 +53,11 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
         if (BigInt(now) > configs.time_end) {
             // should be ended
             return <>
-                <div className={styles.normal}>
-                    Ends
+                <div className={styles.flex+' '+styles.normal}>
+                    <div>Total Raised:&nbsp;</div>
+                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
                 </div>
-                <div style={{position:"relative"}} className={styles.big + ' ' + styles.yellow}>
+                <div style={{position:"relative"}} className={styles.big + ' ' + styles.color}>
                     <div className={styles.crossed}><del>00:00:00</del></div>
                     Any moment now
                 </div>
@@ -63,12 +65,13 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
         }else{
             // ends in ..:..
             return <>
-                <div className={styles.normal}>
-                    Ends in
+                <div className={styles.flex+' '+styles.normal}>
+                    <div>Total Raised:&nbsp;</div>
+                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
                 </div>
                 <div 
                     style={{position:"relative"}} 
-                    className={styles.big + ' ' + styles.yellow}>
+                    className={styles.big}>
                     <Countdown 
                         end={parseInt(configs.time_end.toString())} 
                         onComplete={rerender}/>
@@ -81,12 +84,16 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
     }else{
         // closed and proccessing
         return <>
+            <div className={styles.flex+' '+styles.normal}>
+                <div>Total Raised:&nbsp;</div>
+                <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
+            </div>
             <div className={styles.flex}>
                 <div className={styles.normal}>
                     The pool is
                 </div>
                 &nbsp;
-                <div className={styles.big +' '+ styles.green}>
+                <div className={styles.big +' '+ styles.color}>
                     Closed
                 </div>
             </div>

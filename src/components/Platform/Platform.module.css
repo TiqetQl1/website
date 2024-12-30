@@ -17,6 +17,10 @@
     transition: all 200ms;
     box-shadow: 0 0 40px var(--box-shadow);
     background-color: var(--background-secondary);
+    --theme: var(--green);
+}
+.singlePool.active{
+    --theme: var(--yellow);
 }
 @media only screen and (max-width : 500px){
     .singlePool{
@@ -47,11 +51,9 @@
     font-size: 28px;
     line-height: 36px;
 }
-.yellow{
-    color: var(--yellow);
-}
-.green{
-    color: var(--green);
+.color,
+.color *{
+    color: var(--theme);
 }
 .address{
     font-size: 12px;
