@@ -81,6 +81,7 @@
     background-color: var(--theme);
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
+    transition: all 200ms;
 }
 .text{
     text-align: right;

@@ -21,7 +21,7 @@ function useData<T>(
     const [data, setData] = useState<T>()
 
     const reget = () => {
-        console.log("retrying ...")
+        console.log(`retrying on ${typeof data} , ${trys} , ${isLoading}`)
         getter()
             .then( (res)=>{
                 setData(res)
@@ -30,7 +30,7 @@ function useData<T>(
             .catch((err)=>{
                 console.log(err)
                 setTrys(prev=>{
-                    if (prev==maxRetrys) {
+                    if (prev<=maxRetrys) {
                         setIsLoading(false)
                         return prev
                     }

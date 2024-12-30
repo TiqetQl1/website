@@ -7,6 +7,7 @@ import { Configs, Results, States } from "@/types/Pool"
 import SinglePoolSkeleton from "./SinglePoolSkeleton"
 import Header from "./Components/Header"
 import Bar from "./Components/Bar"
+import Buy from "./Components/Buy"
 
 interface SinglePoolGuard {
     wallet?: EIP6963ProviderDetail,
@@ -30,16 +31,18 @@ const SinglePool
 
     const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
 
-    const buyHandler = async () => {
-        const price = 
-            1n
-            // configs.ticket_price_usdt
-        await buy(wallet, countInputRef.current.value, price)
+    const buyHandler = async (count: bigint) => {
+        await buy(wallet, count, configs.ticket_price_usdt)
         reloadMyTickets()
+        setTimeout(reloadMyTickets, 5000)
+        setTimeout(reloadMyTickets, 10000)
+        setTimeout(reloadMyTickets, 20000)
     }
 
     useEffect(()=>{
+        const inter = setInterval(retryResults, 3000)
         reloadMyTickets()
+        return ()=>clearInterval(inter)
     },[,wallet])
 
     if(isLoadingConfigs && !(configs?.organizer)) 
@@ -68,9 +71,13 @@ const SinglePool
                 current={myTickets} 
                 maximum={configs.max_tickets_of_participant} />
             {/* Buy button */}
+            <Buy 
+                current={myTickets?myTickets:0n} 
+                max={configs.max_tickets_of_participant} 
+                handler={buyHandler} />
             {/* Address */}
             <div className={styles.address}>
-                {text || formatAddress(pool_address, 5)}
+                {text ? text : formatAddress(pool_address, 5)}
             </div>
         </div>
     )

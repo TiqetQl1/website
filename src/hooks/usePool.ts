@@ -7,7 +7,7 @@ import { ethers } from "ethers"
 
 type usePoolReturnType = [
     Pool,
-    (wallet: EIP6963ProviderDetail, count: bigint, price: bigint)=>Promise<boolean>,
+    (wallet: EIP6963ProviderDetail, count: bigint, price_per: bigint)=>Promise<boolean>,
     (wallet: EIP6963ProviderDetail )=>Promise<bigint>
 ]
 
@@ -28,7 +28,7 @@ const usePool = (address: string) => {
         return res
     }
 
-    const buy = async (wallet: EIP6963ProviderDetail, count: bigint, price: bigint) => {
+    const buy = async (wallet: EIP6963ProviderDetail, count: bigint, price_per: bigint) => {
         console.log("start of buy :")
         console.log("checking wallet")
         if (!wallet?.provider) {
@@ -38,7 +38,7 @@ const usePool = (address: string) => {
         console.log("swiching chain")
         switchChain(wallet)
         console.log("making amount")
-        const amount = BigInt(count) * price
+        const amount = BigInt(count) * price_per
         console.log("requesting allowance")
         if (! await requestUSDTAllowance(wallet, amount)){
             console.log("failed")
