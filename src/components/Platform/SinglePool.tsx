@@ -1,10 +1,11 @@
 import usePool from "@/hooks/usePool"
 import styles from "./Platform.module.css"
 import { FC, useEffect, useRef, useState } from "react"
-import { bigIntToFixed, formatAddress, TimeSegments } from "@/utils"
+import { formatAddress } from "@/utils"
 import useData from "@/hooks/useData"
 import { Configs, Results, States } from "@/types/Pool"
 import SinglePoolSkeleton from "./SinglePoolSkeleton"
+import Header from "./Components/Header"
 
 interface SinglePoolGuard {
     wallet?: EIP6963ProviderDetail,
@@ -45,15 +46,14 @@ const SinglePool
 
     return (
         <div className={styles.singlePool}>
-            {/* Total raised money */}
-            <div className={styles.total}>
-                <div>
-                    Total raised :&nbsp;
-                </div>
-                <div className={styles.money}>
-                    {bigIntToFixed(10n, 6)+'$'}
-                </div>
-            </div>
+            {/* Total raised money w/ remaining time */}
+            <Header 
+                configs={configs} 
+                states={states} 
+                results={results} />
+            {/* Bars */}
+            {/* Buy button */}
+            {/* Address */}
             <div className={styles.address}>
                 {text || formatAddress(pool_address, 5)}
             </div>

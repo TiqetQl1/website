@@ -11,7 +11,7 @@ const SinglePoolSkeleton
             <div className={styles.total}>
                 <Skeleton width={50} />
                 &nbsp;
-                <Skeleton width={100}/>
+                <Skeleton className={styles.big} width={100}/>
             </div>
             <div style={{display:"block", height:"20px"}}></div>
             <Skeleton width={150}/>

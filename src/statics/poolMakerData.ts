@@ -14,4 +14,4 @@ export const chainData = {
         ],
     }
     
-export const address = "0x8DcA5d8eE0A33cB104A59C42fB55235E4F3c1093"
+export const address = "0x945cDb91fd6d844c6890369E040d65b52116f24E"

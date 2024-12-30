@@ -18,6 +18,11 @@
     box-shadow: 0 0 40px var(--box-shadow);
     background-color: var(--background-secondary);
 }
+@media only screen and (max-width : 500px){
+    .singlePool{
+        padding: 24px 32px;
+    }
+}
 :global(.slick-current){
     box-sizing: border-box;
     padding: 12px;
@@ -27,24 +32,26 @@
     transform: scale(1);
 }
 
-.total{
+.flex{
     display: flex;
     justify-content: center;
     align-items: first baseline;
     white-space: nowrap;
     flex-wrap: wrap;
 }
-.total>*:first-child{
+.normal{
     font-size: 14px;
     line-height: 20px;
 }
-.total>*:last-child{
+.big{
     font-size: 28px;
     line-height: 36px;
+}
+.yellow{
     color: var(--yellow);
 }
-.countdown{
-    
+.green{
+    color: var(--green);
 }
 .address{
     font-size: 12px;
@@ -52,7 +59,34 @@
     padding-bottom: 10px;
     padding-top: 60px;
 }
-
+.break{
+    display: block;
+    height: 30px;
+}
+.crossed{
+    color: var(--box-shadow);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transform: scale(0.5) translateY(-10px);
+}
+del{
+    color: var(--box-shadow);
+    text-decoration: none;
+    position: relative;
+}
+del::after{
+    content: "";
+    display: block;
+    border-top: 2px solid var(--box-shadow);
+    width: calc(100% + 20px);
+    position: absolute;
+    top: 50%;
+    left: -10px;
+}
 .pagination{
     display: flex;
     width: 100%;

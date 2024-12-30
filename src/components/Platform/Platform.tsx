@@ -8,6 +8,7 @@ import { poolMakerContract, provider } from "@/utils/ether"
 import Dot from "./Dot";
 import useData from "@/hooks/useData";
 import usePool from "@/hooks/usePool";
+import SinglePoolSkeleton from "./SinglePoolSkeleton";
 
 interface PlatformGuard {
     selectedWallet: EIP6963ProviderDetail
@@ -34,24 +35,38 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
             <section className={styles.platform}>
                 {
                     pools?.length 
-                        ? (pools.length>0
-                            ? <Slider 
-                                {...settings} 
-                                className={styles.slick} 
-                                ref={sliderRef}>
-                                {pools.map(
-                                    address => 
-                                        <SinglePool 
-                                            key={address} 
-                                            wallet={selectedWallet} 
-                                            pool_address={address}/>
-                                )}
-                            </Slider>
-                            : "There are not any pools :("
-                        ) : (isLoading 
-                                ? "Retriving pools ..." 
-                                : <button onClick={retryPools}>Refresh</button>
-                            )
+                        ? <Slider 
+                            {...settings} 
+                            className={styles.slick} 
+                            ref={sliderRef}>
+                                {
+                                (pools.length>0)
+                                ? 
+                                pools.map( address => 
+                                    <SinglePool 
+                                        key={address} 
+                                        wallet={selectedWallet} 
+                                        pool_address={address}/>)
+                                : 
+                                <div className={styles.singlePool}>
+                                    There are not any pools :(
+                                    <button onClick={retryPools}>
+                                        Refresh
+                                    </button>
+                                </div>
+                                }
+                        </Slider>
+                        : (
+                        isLoading 
+                            ? <SinglePoolSkeleton />
+                            :
+                            <div className={styles.singlePool}>
+                                Unexpected Error
+                                <button onClick={retryPools}>
+                                    Refresh
+                                </button>
+                            </div>
+                        )
                 }
             </section>
             <section className={styles.pagination}>
@@ -69,7 +84,7 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                                 clickHandler={()=>sliderRef.current.slickGoTo(index)}/>
                         }
                     )
-                    : (isLoading ? "Loading ..." : "Unexpected")}
+                    : (isLoading ? "Loading ..." : "Err !")}
                 </div>
             </section>
         </>
