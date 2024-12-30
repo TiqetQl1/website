@@ -10,8 +10,6 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
     const rerender = () => setRenderSwitch(prev=>prev)
 
     let now = Math.floor(Date.now()/1000)
-    let top = <Skeleton width={50}/>
-    let bot = <Skeleton width={100}/>
     if(states == null){
         // skeleton is okay
         return <>
