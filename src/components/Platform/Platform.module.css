@@ -58,6 +58,7 @@
 /** Bars **/
 .wrapper{
     position: relative;
+    box-sizing: border-box;
     width: 100%;
     border-radius: 12px;
     background-color: var(--background-secondary);
