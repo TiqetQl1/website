@@ -57,9 +57,11 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
                     <div>Total Raised:&nbsp;</div>
                     <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
                 </div>
-                <div style={{position:"relative"}} className={styles.big + ' ' + styles.color}>
-                    <div className={styles.crossed}><del>00:00:00</del></div>
-                    Any moment now
+                <div style={{position:"relative"}} className={""}>
+                    <div className={styles.crossed+' '+styles.big}>
+                        <del className={styles.color}>00:00:00</del>
+                    </div>
+                    Closes any moment now
                 </div>
             </>
         }else{
