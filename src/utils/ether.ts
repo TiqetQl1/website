@@ -10,5 +10,5 @@ export const poolMakerContract = new ethers.Contract(address, PoolMakerABI, prov
 export const getMyContract = async (wallet: EIP6963ProviderDetail, contract_address, ABI) => {
     const etherProv = new ethers.BrowserProvider(wallet.provider)
     const signer    = await etherProv.getSigner()
-    return new ethers.Contract(contract_address, ABI, signer)
+    return await new ethers.Contract(contract_address, ABI, signer)
 }

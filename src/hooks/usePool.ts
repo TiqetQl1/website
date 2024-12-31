@@ -36,7 +36,7 @@ const usePool = (address: string) => {
             return false
         }
         console.log("swiching chain")
-        switchChain(wallet)
+        await switchChain(wallet)
         console.log("making amount")
         const amount = BigInt(count) * price_per
         console.log("requesting allowance")
