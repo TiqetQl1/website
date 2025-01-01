@@ -30,13 +30,16 @@ const SinglePool
     const [wallet, _] = useContext(ConnectedWalletContext)
     const [step, setStep] = useState<Steps>("idle")
 
-    const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
+    const reloadMyTickets = () => 
+        getMyTicketsCount(wallet)
+            .then(res=>setMyTickets(_prev=>((wallet?.provider)?res:null)))
 
     const buyHandler = async () => {
         if (step!="idle") {
             return false
         }
         await buy(wallet, BigInt(toBuy), configs.ticket_price_usdt, setStep)
+        retryStates()
         reloadMyTickets()
         setTimeout(reloadMyTickets, 5000)
         setTimeout(reloadMyTickets, 10000)
