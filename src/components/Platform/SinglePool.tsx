@@ -32,8 +32,8 @@ const SinglePool
 
     const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
 
-    const buyHandler = async (count: bigint) => {
-        await buy(wallet, count, configs.ticket_price_usdt)
+    const buyHandler = async () => {
+        await buy(wallet, BigInt(toBuy), configs.ticket_price_usdt)
         reloadMyTickets()
         setTimeout(reloadMyTickets, 5000)
         setTimeout(reloadMyTickets, 10000)

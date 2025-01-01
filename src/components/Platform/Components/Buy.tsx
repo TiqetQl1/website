@@ -9,7 +9,7 @@ type BuyGuard = {
     configs  : Configs,
     states   : States,
     setToBuy : Dispatch<SetStateAction<number>>
-    handler  : (number)=>{},
+    handler  : ()=>{},
 }
 const Buy : FC<BuyGuard> = ({myTickets, configs, states, setToBuy, handler}) => {
     const [_, setIsWalletListOpen] = useContext(WalletListContext)
@@ -54,7 +54,16 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, setToBuy, handler}) => 
         return <button onClick={()=>setIsWalletListOpen(true)}>Connect wallet</button>
     }
     
-
+    const updateToBuyCount =() =>{
+        setToBuy(prev=>{
+            const newVal = Number(inputRef.current.value)
+            const res = limits?.max
+                ? Math.min(limits.max, newVal)
+                : newVal
+            inputRef.current.value = res
+            return res
+        })
+    }
 
     return (
     <div className="">
@@ -64,9 +73,9 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, setToBuy, handler}) => 
                 {...limits}
                 ref={inputRef}
                 defaultValue={defaultValue}
-                onChange={e=>{setToBuy(parseInt(e.target.value))}} />
+                onChange={updateToBuyCount} />
         </div>
-        <button onClick={()=>handler(BigInt(inputRef.current.value))}>
+        <button onClick={handler}>
             Buy
         </button>
     </div>

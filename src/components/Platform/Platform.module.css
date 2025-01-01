@@ -1,3 +1,14 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+    appearance: textfield;
+}
 .slick-track{
     height: calc(min-content + 100px);
 }
@@ -61,7 +72,6 @@
     box-sizing: border-box;
     width: 100%;
     border-radius: 12px;
-    /* background-color: var(--background-secondary); */
     box-shadow: 0 0 5px var(--box-shadow);
     border: 2px solid var(--theme);
     margin-top: 16px;
@@ -72,8 +82,6 @@
     transition: all 200ms;
 }
 .wrapper.limit{
-    /* box-shadow: 0 0 0 1px darkred ,0 0 4px var(--box-shadow); */
-    /* border-color: darkred; */
     border-color: var(--green);
 }
 .fill{
