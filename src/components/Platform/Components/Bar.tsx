@@ -24,6 +24,12 @@ const Bar : FC<BarGuard> = ({label, current, onHold, maximum}) => {
     const onLimit     = Boolean(width=="100")
     const onHoldLimit = Boolean(widthOnHold=="100")
 
+    current = current?current:0n
+    const total = 
+        onHold
+            ? current+BigInt(onHold)
+            : current
+
     return <div className={styles.wrapper+' '+((onLimit||onHoldLimit)?styles.limit:'')} >
         <div 
             className={styles.fill+' '+(onLimit?styles.limit:'')} 
@@ -37,7 +43,8 @@ const Bar : FC<BarGuard> = ({label, current, onHold, maximum}) => {
             {label}
         </div>
         <div className={styles.text}>
-            {`${current?current:0}${onHold?(" + "+onHold):''} / ${limitNum.toString()}`}
+            {/* {`${current?current:0}${onHold?(" + "+onHold):''} / ${limitNum.toString()}`} */}
+            {`${total} / ${limitNum.toString()}`}
         </div>
     </div>
 }

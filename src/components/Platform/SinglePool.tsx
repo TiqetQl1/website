@@ -77,7 +77,7 @@ const SinglePool
             <Bar 
                 label="Participents"
                 current={states?.buyers_count_} 
-                onHold={Number(myTickets==null || myTickets==0n)}
+                onHold={Number(myTickets!=null && myTickets==0n && toBuy!=0)}
                 maximum={configs.max_participants} />
             <Bar 
                 label="Tiqets sold"
@@ -90,10 +90,16 @@ const SinglePool
                 onHold={toBuy}
                 maximum={configs.max_tickets_of_participant} />
             {/* Buy button */}
-            <Buy 
-                current={myTickets?myTickets:0n} 
-                max={configs.max_tickets_of_participant} 
-                handler={buyHandler} />
+            {
+                (states?.stage_ == 1n)
+                ? <Buy 
+                    myTickets = {myTickets}
+                    configs   = {configs}
+                    states    = {states}
+                    setToBuy  = {setToBuy}
+                    handler   = {buyHandler}/>
+                : ''
+            }
             {/* Address */}
             <div className={styles.address}>
                 {text ? text : formatAddress(pool_address, 5)}
