@@ -23,7 +23,7 @@ const SinglePool
     }) => {
     const [pool, buy, getMyTicketsCount] = usePool(pool_address)
     const [myTickets, setMyTickets] = useState<bigint>(null)
-    const [toBuy, setToBuy] = useState<number>(11)
+    const [toBuy, setToBuy] = useState<number>(0)
     const [configs, isLoadingConfigs ,retryConfigs] = useData<Configs>(pool.configs)
     const [states , isLoadingStates  ,retryStates ] = useData<States> (pool.states )
     const [results, isLoadingResults ,retryResults] = useData<Results>(pool.results)
@@ -96,6 +96,7 @@ const SinglePool
                     myTickets = {myTickets}
                     configs   = {configs}
                     states    = {states}
+                    toBuy     = {toBuy}
                     setToBuy  = {setToBuy}
                     handler   = {buyHandler}/>
                 : ''

@@ -120,6 +120,108 @@ input[type=number] {
     font-weight:bold;
 }
 /** End of Bars **/
+/** Buy Button **/
+.buyButton{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+    margin-top: 32px;
+    overflow: hidden;
+    width: min-content;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.buyButton>*{
+    border: 1px solid var(--theme);
+    border-radius: 16px;
+}
+.buyButton *{
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+}
+.buyButton .count{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.change{
+    display: flex;
+    flex-direction: row;
+}
+.change>*{
+    cursor: pointer;
+    transition: all 200ms;
+    padding: 4px 8px;
+    flex: 1 0 0;
+}
+.change>*:hover{
+    color: var(--theme);
+    background-color: white;
+}
+.buyButton input{
+    cursor:text;
+    outline:0;
+    border: 0;
+}
+.buyButton .buy{
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    padding: 12px 32px;
+    border-radius: 16px;
+    flex-direction: column;
+    margin: 0;
+    box-sizing: border-box;
+    margin-left: 12px;
+    height: min-content;
+    align-self: center;
+    position: relative;
+}
+.buy .price{
+    font-size: 22px;
+    line-height: 28px;
+}
+.buy .each{
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    height: 20px;
+    transition: 200ms;
+}
+.each.hidden{
+    opacity: 0;
+    height: 0px;
+}
+.buy .effect,
+.buy .bg{
+    z-index: -1;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 200ms;
+    border-radius: 16px;
+}
+.buy .bg{
+    background-color: var(--theme);
+    z-index: -2;
+    opacity: 1;
+}
+.buy:hover .effect{
+    opacity: 1;
+}
+/** End of Buy Button **/
 .address{
     font-size: 12px;
     color: var(--box-shadow);
