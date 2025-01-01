@@ -57,10 +57,6 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, step, toBuy, setToBuy, 
             setToBuyProxy(0)
         }
     },[wallet, myTickets])
-
-    if (myTickets==null) {
-        return <button onClick={()=>setIsWalletListOpen(true)}>Connect wallet</button>
-    }
     
     const setToBuyProxy = (newVal) => {
         setToBuy(_prev=>{
@@ -86,7 +82,10 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, step, toBuy, setToBuy, 
     }
 
     return (
-    <div className={styles.buyButton}>
+    <>
+    <div 
+        style={{display:(wallet?'':'none')}}
+        className={styles.buyButton}>
         <div className={styles.count}>
             <div className={styles.change}>
                 <div onClick={()=>updateToBuyCount(+1)}>
@@ -130,6 +129,13 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, step, toBuy, setToBuy, 
             <div className={styles.step}>{step}</div>
         </div>
     </div>
+    <button  
+        style={{display:(wallet?'none':'')}}
+        className={styles.connect}
+        onClick={()=>setIsWalletListOpen(true)}>
+        Connect to buy
+    </button>
+    </>
     )
 }
 

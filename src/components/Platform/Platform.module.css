@@ -183,6 +183,11 @@ input[type=number] {
     align-self: center;
     position: relative;
     background-color: var(--theme);
+    transition: all 200ms;
+}
+.buy:hover{
+    color: var(--theme);
+    background-color: whitesmoke;
 }
 .buy .price{
     font-size: 22px;
@@ -227,6 +232,10 @@ input[type=number] {
 .buy.ing .effect,
 .buy.ing .step{
     opacity: 1;
+}
+.connect{
+    margin: auto;
+    margin-top: 32px;
 }
 /** End of Buy Button **/
 .address{
