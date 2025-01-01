@@ -49,6 +49,12 @@ const SinglePool
     },[,wallet])
 
     useEffect(()=>{
+        if (!isLoadingConfigs && !configs?.organizer) {
+            setTimeout(retryConfigs, 3000)
+        }
+    },[isLoadingConfigs])
+
+    useEffect(()=>{
         if (isLoadingStates || isLoadingResults) {
             return
         }
