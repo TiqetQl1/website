@@ -6,25 +6,31 @@ import LogoutLogo from '@/assets/logout.svg?react'
 import WalletLogo from '@/assets/wallet.svg?react'
 import TimesLogo from '@/assets/times.svg?react'
 import styles from './Header.module.css'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import WalletListContext from '@/Contexts/WalletListContext'
+import ConnectedWalletContext from '@/Contexts/ConnectedWalletContext'
 
-const Header = ({
-    selectedWallet, setSelectedWallet,
-    userAccount, setUserAccount
-    }) => {
+const Header = () => {
 
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [userAccount, setUserAccount] 
+        = useState<string>('')
+    const [selectedWallet, setSelectedWallet] 
+        = useContext(ConnectedWalletContext)
+    const [isOpen, setIsOpen] 
+        = useContext(WalletListContext)
 
     const logout = () =>{
       setUserAccount('')
       setSelectedWallet(undefined)
     }
 
+    const ToggleWalletList = ()=>setIsOpen(prev=>!prev)
+
     useEffect(()=>{
         if (userAccount) {
             setIsOpen(false)
         }
-    },[userAccount])
+    },[userAccount,isOpen])
 
     return (
         <header>
@@ -44,14 +50,14 @@ const Header = ({
                         </sub>
                     </button>
                     :
-                    <button className={styles.selectToggle} onClick={()=>{setIsOpen(prev=>!prev)}}>
+                    <button className={styles.selectToggle} onClick={ToggleWalletList}>
                         {isOpen ? <TimesLogo /> : <WalletLogo /> }
                         &nbsp;
                         {isOpen ? "Close" : "Connect" }
                     </button>
                 }
             </nav>
-            <div className={styles.selectWalletList+' '+(isOpen && styles.open)}>
+            <div className={styles.selectWalletList+' '+(isOpen && styles.open).toString()}>
                 <div>
                     <h4>
                         Select Your Wallet

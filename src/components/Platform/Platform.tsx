@@ -4,17 +4,13 @@ import SinglePool from "./SinglePool"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { poolMakerContract, provider } from "@/utils/ether"
+import { poolMakerContract } from "@/utils/ether"
 import Dot from "./Dot";
 import useData from "@/hooks/useData";
 import usePool from "@/hooks/usePool";
 import SinglePoolSkeleton from "./SinglePoolSkeleton";
 
-interface PlatformGuard {
-    selectedWallet: EIP6963ProviderDetail
-}
-
-const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
+const Platform : FC = () => {
     const [pools, isLoading ,retryPools] 
         = useData<string[]>(poolMakerContract.allActives, 5)
     const [slide, setSlide] = useState<number>(0)
@@ -45,7 +41,6 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                                 pools.map( address => 
                                     <SinglePool 
                                         key={address} 
-                                        wallet={selectedWallet} 
                                         pool_address={address}/>)
                                 : 
                                 <div className={styles.singlePool}>

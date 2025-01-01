@@ -1,6 +1,6 @@
 import usePool from "@/hooks/usePool"
 import styles from "./Platform.module.css"
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, useContext, useEffect, useRef, useState } from "react"
 import { formatAddress } from "@/utils"
 import useData from "@/hooks/useData"
 import { Configs, Results, States } from "@/types/Pool"
@@ -8,9 +8,9 @@ import SinglePoolSkeleton from "./SinglePoolSkeleton"
 import Header from "./Components/Header"
 import Bar from "./Components/Bar"
 import Buy from "./Components/Buy"
+import ConnectedWalletContext from "@/Contexts/ConnectedWalletContext"
 
 interface SinglePoolGuard {
-    wallet?: EIP6963ProviderDetail,
     pool_address?: string,
     text?: string
 }
@@ -18,7 +18,6 @@ interface SinglePoolGuard {
 const SinglePool 
     : FC<SinglePoolGuard> 
     = ({
-        wallet=null, 
         pool_address="0x0000000000000000000000000000000000000000", 
         text=null
     }) => {
@@ -28,6 +27,7 @@ const SinglePool
     const [configs, isLoadingConfigs ,retryConfigs] = useData<Configs>(pool.configs)
     const [states , isLoadingStates  ,retryStates ] = useData<States> (pool.states )
     const [results, isLoadingResults ,retryResults] = useData<Results>(pool.results)
+    const [wallet, _] = useContext(ConnectedWalletContext)
     const inputRef = useRef(null)
 
     const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
