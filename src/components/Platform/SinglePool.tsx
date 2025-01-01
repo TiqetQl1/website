@@ -41,10 +41,25 @@ const SinglePool
     }
 
     useEffect(()=>{
-        const inter = setInterval(retryResults, 3000)
-        reloadMyTickets()
-        return ()=>clearInterval(inter)
+        if (wallet?.provider) {
+            reloadMyTickets()
+        }else{
+            setMyTickets(null)
+        }
     },[,wallet])
+
+    useEffect(()=>{
+        if (isLoadingStates || isLoadingResults) {
+            return
+        }
+        if (states==null || states.stage_ < 5n) {
+            setTimeout(retryStates, 3000)
+        }
+        if (states?.stage_ > 3n) {
+            setTimeout(retryResults, 3000)
+        }
+        return
+    },[isLoadingStates,isLoadingResults])
 
     if(isLoadingConfigs && !(configs?.organizer)) 
         return <SinglePoolSkeleton />
