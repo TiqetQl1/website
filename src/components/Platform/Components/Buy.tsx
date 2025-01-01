@@ -52,9 +52,9 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, step, toBuy, setToBuy, 
     const defaultValue = Math.min(1, limits?.max?limits.max:0)
     useEffect(()=>{
         if (wallet?.provider) {
-            setToBuy(defaultValue)
+            setToBuyProxy(defaultValue)
         }else{
-            setToBuy(0)
+            setToBuyProxy(0)
         }
     },[wallet, myTickets])
 
