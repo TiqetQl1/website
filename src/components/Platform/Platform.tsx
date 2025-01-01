@@ -58,7 +58,11 @@ const Platform : FC<PlatformGuard> = ({selectedWallet}) => {
                         </Slider>
                         : (
                         isLoading 
-                            ? <SinglePoolSkeleton />
+                            ? <Slider
+                            {...settings} 
+                            className={styles.slick}>
+                                <SinglePoolSkeleton />
+                            </Slider>
                             :
                             <div className={styles.singlePool}>
                                 Unexpected Error

@@ -8,7 +8,7 @@ const SinglePoolSkeleton
     return (
         <SkeletonTheme >
         <div className={styles.singlePool}>
-            <div className={styles.total}>
+            <div className={styles.total+' '+styles.flex}>
                 <Skeleton width={50} />
                 &nbsp;
                 <Skeleton className={styles.big} width={100}/>
