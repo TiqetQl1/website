@@ -55,7 +55,7 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
             return <>
                 <div className={styles.flex+' '+styles.normal}>
                     <div>Total Raised:&nbsp;</div>
-                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
+                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 6)}$</div>
                 </div>
                 <div style={{position:"relative"}} className={""}>
                     <div className={styles.crossed+' '+styles.big}>
@@ -69,7 +69,7 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
             return <>
                 <div className={styles.flex+' '+styles.normal}>
                     <div>Total Raised:&nbsp;</div>
-                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
+                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 6)}$</div>
                 </div>
                 <div 
                     style={{position:"relative"}} 
@@ -88,7 +88,7 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
         return <>
             <div className={styles.flex+' '+styles.normal}>
                 <div>Total Raised:&nbsp;</div>
-                <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 4)}$</div>
+                <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 6)}$</div>
             </div>
             <div className={styles.flex}>
                 <div className={styles.normal}>
