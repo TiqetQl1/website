@@ -21,7 +21,7 @@ function useData<T>(
     const [data, setData] = useState<T>()
 
     const reget = () => {
-        console.log(`retrying on ${typeof data} , ${trys} , ${isLoading}`)
+        // console.log(`retrying on ${typeof data} , ${trys} , ${isLoading}`)
         getter()
             .then( (res)=>{
                 setData(res)

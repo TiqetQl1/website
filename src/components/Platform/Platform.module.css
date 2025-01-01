@@ -182,6 +182,7 @@ input[type=number] {
     height: min-content;
     align-self: center;
     position: relative;
+    background-color: var(--theme);
 }
 .buy .price{
     font-size: 22px;
@@ -201,8 +202,8 @@ input[type=number] {
     height: 0px;
 }
 .buy .effect,
-.buy .bg{
-    z-index: -1;
+.buy .step{
+    z-index: 2;
     display: block;
     position: absolute;
     top: 0;
@@ -213,12 +214,18 @@ input[type=number] {
     transition: all 200ms;
     border-radius: 16px;
 }
-.buy .bg{
+.buy .step{
     background-color: var(--theme);
-    z-index: -2;
-    opacity: 1;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    white-space: wrap;
+
 }
-.buy:hover .effect{
+.buy.ing .effect,
+.buy.ing .step{
     opacity: 1;
 }
 /** End of Buy Button **/

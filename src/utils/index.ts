@@ -19,7 +19,7 @@ export const switchChain = async (wallet: EIP6963ProviderDetail) => {
   const chainId = "0x"+(chainData.chainId).toString(16);
   if (!wallet?.provider) {
     console.error('Bad wallet !')
-    return
+    return false
   }
   try {
     await wallet.provider.request({
@@ -28,19 +28,28 @@ export const switchChain = async (wallet: EIP6963ProviderDetail) => {
     })
   } catch (switchError) {
     // If the chain hasn't been added to the wallet, add it
-    if (switchError.code === 4902) {
+    const errString = JSON.stringify(switchError)
+    if (
+      RegExp('\\bwallet_switchEthereumChain\\b').test(errString)
+      ||RegExp('\\b4902\\b').test(errString)
+      ||RegExp('\\b'+chainId+'\\b').test(errString)
+      ||switchError.code == 4902) {
       try {
         await wallet.provider.request({
           method: 'wallet_addEthereumChain',
           params: [ chainData ],
         })
+        console.log("here")
       } catch (addError) {
-        console.error('Failed to add network', addError)
+        console.error(switchError)
+        throw 'Failed to add network'
       }
     } else {
-      console.error('Failed to switch network', switchError)
+      console.error(switchError)
+      throw 'Failed to switch network'
     }
   }
+  return true
 }
 
 export type TimeSegments = {

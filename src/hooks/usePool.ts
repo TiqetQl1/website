@@ -3,13 +3,26 @@ import { qusdtABI, qusdtAddress } from "@/statics/QUSDT"
 import { Configs, Pool, Results, States } from "@/types/Pool"
 import { switchChain } from "@/utils"
 import { getMyContract, provider } from "@/utils/ether"
-import { ethers } from "ethers"
+import { ContractTransactionResponse, ethers } from "ethers"
+import { Dispatch, SetStateAction } from "react"
 
 type usePoolReturnType = [
     Pool,
-    (wallet: EIP6963ProviderDetail, count: bigint, price_per: bigint)=>Promise<boolean>,
+    (
+        wallet: EIP6963ProviderDetail, 
+        count: bigint, 
+        price_per: bigint,
+        setStep ?: Dispatch<SetStateAction<Steps>>
+    )=>Promise<boolean>,
     (wallet: EIP6963ProviderDetail )=>Promise<bigint>
 ]
+
+export type Steps = 
+    "idle"|
+    "Starting process"|
+    "Swiching chain"|
+    "Requesting allowance"|
+    "Calling TiQet"
 
 const usePool = (address: string) => {
     const contract_read = new ethers.Contract(address, PoolABI, provider.provider)
@@ -18,38 +31,45 @@ const usePool = (address: string) => {
     const configs : () => Promise<Configs> = async () => await contract_read.configs()
 
     const requestUSDTAllowance = async (wallet: EIP6963ProviderDetail, amount: bigint) => {
-        if (!wallet?.provider) {
-            return false
-        }
         const qUSDT = await getMyContract(wallet, qusdtAddress, qusdtABI)
         const spender = address;
-        const res = await qUSDT.approve(spender, amount)
-        console.log(res)
-        return res
+        const res
+            : ContractTransactionResponse 
+            = await qUSDT.approve(spender, amount)
+        return ((await res.wait())!=null)
     }
 
-    const buy = async (wallet: EIP6963ProviderDetail, count: bigint, price_per: bigint) => {
-        console.log("start of buy :")
-        console.log("checking wallet")
-        if (!wallet?.provider) {
-            console.log("wallet not valid")
+    const buy = async (
+        wallet: EIP6963ProviderDetail, 
+        count: bigint, 
+        price_per: bigint,
+        setStep?: Dispatch<SetStateAction<Steps>>) => {
+        try{
+            setStep && await setStep("Starting process") // 1
+            if (!wallet?.provider) {
+                throw "wallet not valid"
+            }
+            setStep && await setStep("Swiching chain") // 2
+            await switchChain(wallet)
+            setStep && await setStep("Requesting allowance") // 3
+            const amount = BigInt(count) * price_per
+            if (! await requestUSDTAllowance(wallet, amount)){
+                throw "qusdt failed"
+            }
+            setStep && await setStep("Calling TiQet") // 4
+            const my_contract = await getMyContract(wallet, address, PoolABI)
+            const res 
+                : ContractTransactionResponse 
+                = await my_contract.buyTicket(count)
+            if (((await res.wait())==null)) {
+                throw "Error on TiQet"
+            }
+        }catch(err){
+            setStep && await setStep("idle")
+            console.log(err)
             return false
         }
-        console.log("swiching chain")
-        await switchChain(wallet)
-        console.log("making amount")
-        const amount = BigInt(count) * price_per
-        console.log("requesting allowance")
-        if (! await requestUSDTAllowance(wallet, amount)){
-            console.log("failed")
-            return false;
-        }
-        console.log("making contract")
-        const my_contract = await getMyContract(wallet, address, PoolABI)
-        console.log("calling buy")
-        const res = await my_contract.buyTicket(count)
-        console.log(res)
-        console.log("--- end of buy")
+        setStep && await setStep("idle")
         return true
     }
 
@@ -63,7 +83,6 @@ const usePool = (address: string) => {
                     .request({ method: 'eth_requestAccounts' })
                     .catch(console.error)
             ) as string[] | undefined;
-        console.log("account : ", accounts[0])
         return BigInt(await contract_read.tickets_of_participant(accounts[0]))
     }
 

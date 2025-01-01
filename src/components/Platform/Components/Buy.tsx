@@ -8,20 +8,21 @@ import WalletListContext from "@/Contexts/WalletListContext"
 import ConnectedWalletContext from "@/Contexts/ConnectedWalletContext"
 import { bigIntToFixed } from "@/utils"
 import Skeleton from "react-loading-skeleton"
+import { Steps } from "@/hooks/usePool"
 
 type BuyGuard = {
     myTickets: bigint,
     configs  : Configs,
     states   : States,
+    step     : Steps,
     toBuy    : number,
     setToBuy : Dispatch<SetStateAction<number>>
     handler  : ()=>{},
 }
-const Buy : FC<BuyGuard> = ({myTickets, configs, states, toBuy, setToBuy, handler}) => {
+const Buy : FC<BuyGuard> = ({myTickets, configs, states, step, toBuy, setToBuy, handler}) => {
     const [_, setIsWalletListOpen] = useContext(WalletListContext)
     const [wallet, _setWallet] = useContext(ConnectedWalletContext)
     const inputRef = useRef(null)
-    console.log(toBuy)
     
     // get min & max
     let limits : {min:number, max?:number} = {min:0}
@@ -118,7 +119,7 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, toBuy, setToBuy, handle
                 </div>
             </div>
         </div>
-        <div className={styles.buy} onClick={handler}>
+        <div className={styles.buy+' '+(step!="idle"?styles.ing:'')} onClick={handler}>
             <div className={styles.price}>
                 {bigIntToFixed(configs.ticket_price_usdt*BigInt(toBuy), 6)}$
             </div>
@@ -126,7 +127,7 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, toBuy, setToBuy, handle
                 {bigIntToFixed(configs.ticket_price_usdt, 6)}$ each
             </div>
             <Skeleton inline={true} className={styles.effect} baseColor="transparent" />
-            <div className={styles.bg}>&nbsp;</div>
+            <div className={styles.step}>{step}</div>
         </div>
     </div>
     )

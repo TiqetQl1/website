@@ -1,4 +1,4 @@
-import usePool from "@/hooks/usePool"
+import usePool, { Steps } from "@/hooks/usePool"
 import styles from "./Platform.module.css"
 import { FC, useContext, useEffect, useRef, useState } from "react"
 import { formatAddress } from "@/utils"
@@ -28,12 +28,15 @@ const SinglePool
     const [states , isLoadingStates  ,retryStates ] = useData<States> (pool.states )
     const [results, isLoadingResults ,retryResults] = useData<Results>(pool.results)
     const [wallet, _] = useContext(ConnectedWalletContext)
-    const inputRef = useRef(null)
+    const [step, setStep] = useState<Steps>("idle")
 
     const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
 
     const buyHandler = async () => {
-        await buy(wallet, BigInt(toBuy), configs.ticket_price_usdt)
+        if (step!="idle") {
+            return false
+        }
+        await buy(wallet, BigInt(toBuy), configs.ticket_price_usdt, setStep)
         reloadMyTickets()
         setTimeout(reloadMyTickets, 5000)
         setTimeout(reloadMyTickets, 10000)
@@ -102,6 +105,7 @@ const SinglePool
                     myTickets = {myTickets}
                     configs   = {configs}
                     states    = {states}
+                    step      = {step}
                     toBuy     = {toBuy}
                     setToBuy  = {setToBuy}
                     handler   = {buyHandler}/>
