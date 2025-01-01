@@ -23,11 +23,12 @@ const SinglePool
         text=null
     }) => {
     const [pool, buy, getMyTicketsCount] = usePool(pool_address)
-    const [myTickets, setMyTickets] = useState<bigint>(0n)
+    const [myTickets, setMyTickets] = useState<bigint>(null)
+    const [toBuy, setToBuy] = useState<number>(11)
     const [configs, isLoadingConfigs ,retryConfigs] = useData<Configs>(pool.configs)
     const [states , isLoadingStates  ,retryStates ] = useData<States> (pool.states )
     const [results, isLoadingResults ,retryResults] = useData<Results>(pool.results)
-    const countInputRef = useRef(null)
+    const inputRef = useRef(null)
 
     const reloadMyTickets = () => getMyTicketsCount(wallet).then(res=>setMyTickets(res))
 
@@ -61,14 +62,17 @@ const SinglePool
             <Bar 
                 label="Participents"
                 current={states?.buyers_count_} 
+                onHold={Number(myTickets==null || myTickets==0n)}
                 maximum={configs.max_participants} />
             <Bar 
                 label="Tiqets sold"
                 current={states?.tickets_sold_} 
+                onHold={toBuy}
                 maximum={configs.max_tickets_total} />
             <Bar 
                 label="Your tiqets"
                 current={myTickets} 
+                onHold={toBuy}
                 maximum={configs.max_tickets_of_participant} />
             {/* Buy button */}
             <Buy 

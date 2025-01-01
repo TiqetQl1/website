@@ -7,9 +7,10 @@ import styles from "../Platform.module.css";
 type BarGuard = {
     label  : string,
     current: bigint,
+    onHold : number,
     maximum: bigint,
 }
-const Bar : FC<BarGuard> = ({label, current, maximum}) => {
+const Bar : FC<BarGuard> = ({label, current, onHold, maximum}) => {
     const [limitText, limitNum] = (maximum==null || maximum==0n) 
         ? [<InfiniteLogo/>, 0n] 
         : [<span>{maximum.toString()}</span>, maximum]
@@ -17,14 +18,26 @@ const Bar : FC<BarGuard> = ({label, current, maximum}) => {
     const width = limitNum==0n 
         ? 0
         : (Math.min((Number(current) / Number(limitNum)), 1)*100).toFixed()
+    const widthOnHold = limitNum==0n 
+        ? 0
+        : (Math.min(((Number(current)+onHold) / Number(limitNum)), 1)*100).toFixed()
+    const onLimit     = Boolean(width=="100")
+    const onHoldLimit = Boolean(widthOnHold=="100")
 
-    return <div className={styles.wrapper}>
-        <div className={styles.fill} style={{width:width+"%"}}>&nbsp;</div>
+    return <div className={styles.wrapper+' '+((onLimit||onHoldLimit)?styles.limit:'')} >
+        <div 
+            className={styles.fill+' '+(onLimit?styles.limit:'')} 
+            style={{width:width+"%"}}>
+            &nbsp;</div>
+        <div 
+            className={styles.fill+' '+styles.hold+' '+(onHoldLimit?styles.limit:'')} 
+            style={{width:widthOnHold+"%"}}>
+            &nbsp;</div>
         <div className={styles.label}>
             {label}
         </div>
         <div className={styles.text}>
-            {`${current} / ${limitNum.toString()}`}
+            {`${current?current:0}${onHold?(" + "+onHold):''} / ${limitNum.toString()}`}
         </div>
     </div>
 }
