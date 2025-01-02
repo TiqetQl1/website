@@ -1,6 +1,6 @@
 import usePool, { Steps } from "@/hooks/usePool"
 import styles from "./Platform.module.css"
-import { FC, useContext, useEffect, useRef, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import { formatAddress } from "@/utils"
 import useData from "@/hooks/useData"
 import { Configs, Results, States } from "@/types/Pool"
@@ -11,16 +11,12 @@ import Buy from "./Components/Buy"
 import ConnectedWalletContext from "@/Contexts/ConnectedWalletContext"
 
 interface SinglePoolGuard {
-    pool_address?: string,
-    text?: string
+    pool_address: string,
 }
 
 const SinglePool 
     : FC<SinglePoolGuard> 
-    = ({
-        pool_address="0x0000000000000000000000000000000000000000", 
-        text=null
-    }) => {
+    = ({pool_address,}) => {
     const [pool, buy, getMyTicketsCount] = usePool(pool_address)
     const [myTickets, setMyTickets] = useState<bigint>(null)
     const [toBuy, setToBuy] = useState<number>(0)
@@ -116,7 +112,7 @@ const SinglePool
             }
             {/* Address */}
             <div className={styles.address}>
-                {text ? text : formatAddress(pool_address, 5)}
+                {formatAddress(pool_address, 5)}
             </div>
         </div>
     )
