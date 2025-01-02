@@ -122,7 +122,7 @@ const Buy : FC<BuyGuard> = ({myTickets, configs, states, step, toBuy, setToBuy, 
             <div className={styles.price}>
                 {bigIntToFixed(configs.ticket_price_usdt*BigInt(toBuy), 6)}$
             </div>
-            <div className={styles.each+' '+((toBuy==1)?styles.hidden:'')}>
+            <div className={styles.each+' '+(((toBuy<=1)||step!="idle")?styles.hidden:'')}>
                 {bigIntToFixed(configs.ticket_price_usdt, 6)}$ each
             </div>
             <Skeleton inline={true} className={styles.effect} baseColor="transparent" />
