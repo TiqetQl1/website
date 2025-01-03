@@ -9,7 +9,7 @@ import Header from "./Components/Header"
 import Bar from "./Components/Bar"
 import Buy from "./Components/Buy"
 import ConnectedWalletContext from "@/Contexts/ConnectedWalletContext"
-import { Tooltip } from "react-tooltip"
+import Winners from "./Components/Winners"
 
 interface SinglePoolGuard {
     pool_address: string,
@@ -100,7 +100,7 @@ const SinglePool
                 maximum={configs.max_tickets_of_participant} />
             {/* Buy button */}
             {
-                (states?.stage_ == 1n)
+                ((states?.stage_ == 1n)
                 ? <Buy 
                     myTickets = {myTickets}
                     configs   = {configs}
@@ -109,7 +109,10 @@ const SinglePool
                     toBuy     = {toBuy}
                     setToBuy  = {setToBuy}
                     handler   = {buyHandler}/>
-                : ''
+                : (
+                states?.stage_ == 5n
+                    ? <Winners configs={configs} results={results}/>
+                : ''))
             }
             {/* Address */}
             <Address pool_address={pool_address} />
