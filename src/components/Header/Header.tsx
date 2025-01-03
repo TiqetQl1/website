@@ -6,14 +6,15 @@ import LogoutLogo from '@/assets/logout.svg?react'
 import WalletLogo from '@/assets/wallet.svg?react'
 import TimesLogo from '@/assets/times.svg?react'
 import styles from './Header.module.css'
-import { useContext, useEffect, useState } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import WalletListContext from '@/Contexts/WalletListContext'
 import ConnectedWalletContext from '@/Contexts/ConnectedWalletContext'
+import ActiveAccountContext from '@/Contexts/ActiveAccountContext'
 
-const Header = () => {
+const Header : FC = () => {
 
     const [userAccount, setUserAccount] 
-        = useState<string>('')
+        = useContext(ActiveAccountContext)
     const [selectedWallet, setSelectedWallet] 
         = useContext(ConnectedWalletContext)
     const [isOpen, setIsOpen] 
