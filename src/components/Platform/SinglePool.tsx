@@ -1,7 +1,7 @@
 import usePool, { Steps } from "@/hooks/usePool"
 import styles from "./Platform.module.css"
 import { FC, useContext, useEffect, useState } from "react"
-import { formatAddress } from "@/utils"
+import { copyToClip, formatAddress } from "@/utils"
 import useData from "@/hooks/useData"
 import { Configs, Results, States } from "@/types/Pool"
 import SinglePoolSkeleton from "./SinglePoolSkeleton"
@@ -111,7 +111,7 @@ const SinglePool
                 : ''
             }
             {/* Address */}
-            <div className={styles.address}>
+            <div className={styles.address} onClick={()=>copyToClip(pool_address)}>
                 {formatAddress(pool_address, 5)}
             </div>
         </div>
