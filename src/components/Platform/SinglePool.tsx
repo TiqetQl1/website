@@ -9,6 +9,7 @@ import Header from "./Components/Header"
 import Bar from "./Components/Bar"
 import Buy from "./Components/Buy"
 import ConnectedWalletContext from "@/Contexts/ConnectedWalletContext"
+import { Tooltip } from "react-tooltip"
 
 interface SinglePoolGuard {
     pool_address: string,
@@ -111,11 +112,26 @@ const SinglePool
                 : ''
             }
             {/* Address */}
-            <div className={styles.address} onClick={()=>copyToClip(pool_address)}>
-                {formatAddress(pool_address, 5)}
-            </div>
+            <Address pool_address={pool_address} />
         </div>
     )
+}
+
+type AddressGuard = {pool_address: string}
+const Address : FC<AddressGuard> = ({pool_address}) => {
+    const addressText = formatAddress(pool_address, 5)
+    const [text, setText] = useState(formatAddress(pool_address, 5))
+
+    return <div 
+        className={styles.address} 
+        onMouseEnter={()=>setText("Click to copy")}
+        onMouseLeave={()=>setText(addressText)}
+        onClick={()=>{
+            copyToClip(pool_address)
+            setText("Copied !")
+            }}>
+            {text}
+    </div>
 }
 
 export default SinglePool
