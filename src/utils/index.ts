@@ -81,3 +81,19 @@ export const bigIntToFixed = (value: bigint, decimals: number): string => {
   const fractional = padded.slice(-decimals); // Fractional part
   return `${whole}.${fractional}`;
 }
+
+export const copyToClip = (copyText) => {
+  navigator.permissions.query({ name: "clipboard-write" }).then((result) => {
+    if (result.state === "granted" || result.state === "prompt") {
+      navigator.clipboard.writeText(copyText).then(
+        () => {
+          /* clipboard successfully set */
+        },
+        (err) => {
+          /* clipboard write failed */
+          console.warn("Error on writing to clip board : ",err)
+        },
+      );
+    }
+  });
+}
