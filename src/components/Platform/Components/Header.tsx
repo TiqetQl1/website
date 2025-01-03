@@ -82,7 +82,16 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
         }
     }else if (states.stage_ == 5n) {
         // finished
-        return "finished"
+        return <div className={styles.flex+' '+styles.normal}>
+            <div>Total Raised:&nbsp;</div>
+            {
+            results?.max_raised_
+                ? <div className={styles.big+' '+styles.color}>
+                    {bigIntToFixed(results?.max_raised_, 6)}$
+                </div>
+                : <Skeleton className={styles.big} width={100}/>
+            }
+        </div>
     }else{
         // closed and proccessing
         return <>
