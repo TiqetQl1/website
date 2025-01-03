@@ -147,13 +147,18 @@ input[type=number] {
 .buyButton .count{
     display: flex;
     flex-direction: column;
-    width: auto;
+    width: min-content;
     box-sizing: border-box;
     overflow: hidden;
+}
+.count>*{
+    width: 75px;
+    margin: auto;
 }
 .change{
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 .change>*{
     cursor: pointer;
@@ -202,6 +207,7 @@ input[type=number] {
     white-space: nowrap;
     height: 20px;
     transition: 200ms;
+    margin: auto;
 }
 .each.hidden{
     opacity: 0;

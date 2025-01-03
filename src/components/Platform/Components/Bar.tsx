@@ -44,7 +44,7 @@ const Bar : FC<BarGuard> = ({label, current, onHold, maximum}) => {
         </div>
         <div className={styles.text}>
             {/* {`${current?current:0}${onHold?(" + "+onHold):''} / ${limitNum.toString()}`} */}
-            {`${total} / ${limitNum.toString()}`}
+            {limitNum>0 ? `${total} / ${limitNum.toString()}` : total.toString()}
         </div>
     </div>
 }
