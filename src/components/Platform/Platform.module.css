@@ -19,7 +19,7 @@ input[type=number] {
 
 .singlePool{
     box-sizing: border-box;
-    max-width: 480px;
+    max-width: var(--max-width);
     margin: 40px auto;
     padding: 24px 32px;
     padding-bottom: 0;
