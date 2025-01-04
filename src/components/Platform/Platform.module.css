@@ -415,6 +415,8 @@ del::after{
 }
 .pagination{
     display: flex;
+    max-width: var(--max-width);
+    margin: auto;
     width: 100%;
     justify-content: center;
 }
