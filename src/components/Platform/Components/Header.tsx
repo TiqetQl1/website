@@ -22,96 +22,48 @@ const Header : FC<HeaderGuard> = ({configs, states, results}) => {
             <div className={styles.break}></div>
             <Skeleton className={styles.big} width={100}/>
         </>
-    }else if(states.stage_ == 0n){
-        if (BigInt(now) > configs.time_start) {
-        // should be started but isnt
-        return <>
-            <div className={styles.normal}>
-                Starts
-            </div>
-            <div style={{position:"relative"}} className={styles.big + ' ' + styles.color}>
-                <div className={styles.crossed}><del>00:00:00</del></div>
-                Any moment now
-            </div>
-        </>
-        }else{
-            // starts in ..:..
-            return <>
-                <div className={styles.normal}>
-                    Starts in
-                </div>
-                <div 
-                    style={{position:"relative"}} 
-                    className={styles.big + ' ' + styles.color}>
-                    <Countdown 
-                        end={parseInt(configs.time_end.toString())} 
-                        onComplete={rerender}/>
-                </div>
-            </>
-        }
-    }else if (states.stage_ == 1n) {
-        if (BigInt(now) > configs.time_end) {
-            // should be ended
-            return <>
-                <div className={styles.flex+' '+styles.normal}>
-                    <div>Total Raised:&nbsp;</div>
-                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 6)}$</div>
-                </div>
-                <div style={{position:"relative"}} className={""}>
-                    <div className={styles.crossed+' '+styles.big}>
-                        <del className={styles.color}>00:00:00</del>
-                    </div>
-                    Closes any moment now
-                </div>
-            </>
-        }else{
-            // ends in ..:..
-            return <>
-                <div className={styles.flex+' '+styles.normal}>
-                    <div>Total Raised:&nbsp;</div>
-                    <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 6)}$</div>
-                </div>
-                <div 
-                    style={{position:"relative"}} 
-                    className={styles.big}>
-                    <Countdown 
-                        end={parseInt(configs.time_end.toString())} 
-                        onComplete={rerender}/>
-                </div>
-            </>
-        }
-    }else if (states.stage_ == 5n) {
-        // finished
-        return <div className={styles.flex+' '+styles.normal}>
-            <div>Total Raised:&nbsp;</div>
-            {
-            results?.max_raised_
-                ? <div className={styles.big+' '+styles.color}>
-                    {bigIntToFixed(results?.max_raised_, 6)}$
-                </div>
-                : <Skeleton className={styles.big} width={100}/>
-            }
-        </div>
-    }else{
-        // closed and proccessing
-        return <>
+    }
+    const totalraised = results?.max_raised_
+        ? results.max_raised_
+        : states.raised_
+    return(<>
+        {/* Total Raised */}
+        {
+            states.stage_==0n?'':
             <div className={styles.flex+' '+styles.normal}>
                 <div>Total Raised:&nbsp;</div>
-                <div className={styles.big+' '+styles.color}>{bigIntToFixed(states?.raised_, 6)}$</div>
+                <div className={styles.big+' '+styles.color}>
+                    {bigIntToFixed(totalraised, 6)}$
+                </div>
             </div>
+        }
+        {/* Time Left */}
+        {
+            states.stage_!=1n?'':
             <div className={styles.flex}>
+                <div className={styles.big+' '+styles.color}>
+                    {
+                        BigInt(now) > configs.time_end
+                            ? <>
+                                <span>00</span>
+                                <i>:</i>
+                                <span>00</span>
+                                <i>:</i>
+                                <span>00</span>
+                            </>
+                            : <Countdown 
+                                end={parseInt(configs.time_end.toString())} 
+                                onComplete={rerender}/>
+                    }
+                </div>
+                <span>
+                    &nbsp;
+                </span>
                 <div className={styles.normal}>
-                    The pool is
-                </div>
-                &nbsp;
-                <div className={styles.big +' '+ styles.color}>
-                    Closed
+                    to end
                 </div>
             </div>
-            <div className={styles.normal}>
-                Stay tuned for winners list
-            </div>
-        </>
-    }
+        }
+    </>)
 }
 export default Header
