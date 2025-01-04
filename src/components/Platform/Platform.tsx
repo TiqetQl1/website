@@ -1,5 +1,5 @@
 import styles from "./Platform.module.css"
-import { FC, useRef, useState } from "react"
+import { Dispatch, FC, SetStateAction, useRef, useState } from "react"
 import SinglePool from "./SinglePool"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
@@ -10,7 +10,11 @@ import useData from "@/hooks/useData";
 import usePool from "@/hooks/usePool";
 import SinglePoolSkeleton from "./SinglePoolSkeleton";
 
-const Platform : FC = () => {
+type PlatformGuard = {
+    isArchiveOpen: boolean,
+    setIsArchiveOpen: Dispatch<SetStateAction<boolean>>,
+}
+const Platform : FC<PlatformGuard> = ({isArchiveOpen, setIsArchiveOpen}) => {
     const [pools, isLoading ,retryPools] 
         = useData<string[]>(poolMakerContract.allActives, 5)
     const [slide, setSlide] = useState<number>(0)
@@ -69,8 +73,8 @@ const Platform : FC = () => {
                 }
             </section>
             <section className={styles.pagination}>
-                <div>
-                    Legacy pools
+                <div onClick={()=>setIsArchiveOpen(prev=>!prev)}>
+                    Legacy pools {isArchiveOpen}
                 </div>
                 <div className={styles.dots}>
                     { pools?.length ? pools.map((address, index)=> 
