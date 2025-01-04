@@ -21,7 +21,7 @@ input[type=number] {
     box-sizing: border-box;
     max-width: 480px;
     margin: 40px auto;
-    padding: 40px 80px;
+    padding: 24px 32px;
     padding-bottom: 0;
     border-radius: 28px;
     transition: all 200ms;
@@ -36,14 +36,35 @@ input[type=number] {
 .singlePool.finished{
     --theme: var(--yellow);
 }
-@media only screen and (max-width : 500px){
+@media only screen and (min-width : 700px){
     .singlePool{
-        padding: 24px 32px;
+        padding: 40px 80px;
         padding-bottom: 0;
+    }
+    :global(.slick-slider){
+        width: 700px;
+        margin: auto;
+    }
+    :global(.slick-list){
+        width: 100vw;
+        margin: auto;
+        position: relative;
+        z-index: 0;
+        left: calc(350px - 50vw);
+    }
+    :global(.slick-arrow){
+        z-index: 2;
+        box-shadow: 0 0 12px 4px var(--box-shadow);
+    }
+    :global(.slick-arrow:before){
+        color: darkgray!important;
+    }
+    :global(.slick-arrow.slick-disabled){
+        opacity: 0.2;
     }
 }
 :global(.slick-slider .slick-slide:not(.slick-active)) .singlePool{
-    transform: scale(0.35);
+    transform: scale(0.65);
 }
 :global(.slick-slider .slick-slide.slick-active) .singlePool{
     transform: scale(1);

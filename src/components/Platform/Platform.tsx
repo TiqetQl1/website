@@ -22,6 +22,7 @@ const Platform : FC<PlatformGuard> = ({isArchiveOpen, setIsArchiveOpen}) => {
 
     const settings = {
         className: "center",
+        dots: false,
         infinite: false,
         centerMode: true,
         centerPadding: "0",
