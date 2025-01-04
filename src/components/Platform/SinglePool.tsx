@@ -83,21 +83,23 @@ const SinglePool
                 states={states} 
                 results={results} />
             {/* Bars */}
-            <Bar 
-                label="Participents"
-                current={states?.buyers_count_} 
-                onHold={Number(myTickets!=null && myTickets==0n && toBuy!=0)}
-                maximum={configs.max_participants} />
-            <Bar 
-                label="Tiqets sold"
-                current={states?.tickets_sold_} 
-                onHold={toBuy}
-                maximum={configs.max_tickets_total} />
-            <Bar 
-                label="Your tiqets"
-                current={myTickets} 
-                onHold={toBuy}
-                maximum={configs.max_tickets_of_participant} />
+            <div className={styles.bars}>
+                <Bar 
+                    label="Participents"
+                    current={states?.buyers_count_} 
+                    onHold={Number(myTickets!=null && myTickets==0n && toBuy!=0)}
+                    maximum={configs.max_participants} />
+                <Bar 
+                    label="Tiqets sold"
+                    current={states?.tickets_sold_} 
+                    onHold={toBuy}
+                    maximum={configs.max_tickets_total} />
+                <Bar 
+                    label="Your tiqets"
+                    current={myTickets} 
+                    onHold={toBuy}
+                    maximum={configs.max_tickets_of_participant} />
+            </div>
             {/* Buy button */}
             {
                 ((states?.stage_ == 1n)
