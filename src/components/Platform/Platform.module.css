@@ -27,18 +27,23 @@ input[type=number] {
     transition: all 200ms;
     box-shadow: 0 0 40px var(--box-shadow);
     background-color: var(--background-secondary);
-    --theme: var(--green);
+    --theme: var(--box-shadow);
+    overflow: hidden;
 }
 .singlePool.active{
+    --theme: var(--yellow);
+}
+.singlePool.finished{
     --theme: var(--yellow);
 }
 @media only screen and (max-width : 500px){
     .singlePool{
         padding: 24px 32px;
+        padding-bottom: 0;
     }
 }
 :global(.slick-slider .slick-slide:not(.slick-active)) .singlePool{
-    transform: scale(0.75);
+    transform: scale(0.35);
 }
 :global(.slick-slider .slick-slide.slick-active) .singlePool{
     transform: scale(1);
@@ -67,7 +72,47 @@ input[type=number] {
 .color *{
     color: var(--theme);
 }
+/** Ribbon **/
+.ribbon{
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 100%;
+}
+.singlePool.active .ribbon *{
+    color: white;
+}
+.ribbon{
+    white-space: nowrap;
+    text-align: left;
+}
+.ribbon>*{
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 110px;
+    animation-name: ribbonMove;
+    animation-timing-function: linear;
+    animation-duration: 4s;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+}
+.singlePool.active .ribbon *{
+    animation-duration: 1s;
+}
+@keyframes ribbonMove {
+    from{
+        right: 0px;
+    }
+    to{
+        right: 110px;
+    }
+}
+/** End of ribbon **/
 /** Bars **/
+.bars{
+    margin: 42px auto;
+}
 .wrapper{
     position: relative;
     box-sizing: border-box;

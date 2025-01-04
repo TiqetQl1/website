@@ -82,6 +82,7 @@ const SinglePool
         <div className={
                 styles.singlePool+' '+
                 (states?.stage_==1n ? styles.active : '')}>
+            <Ribbon states={states} />
             {/* Total raised money w/ remaining time */}
             <Header 
                 configs={configs} 
@@ -144,4 +145,27 @@ const Address : FC<AddressGuard> = ({pool_address}) => {
     </div>
 }
 
+type RibbonGuard = {
+    states: States,
+}
+const Ribbon : FC<RibbonGuard> = ({states}) => {
+    const [some, setSome] = useState<number>(0)
+    let stateString
+    if (states!=null) {
+        if (states.stage_<=0n) {
+            stateString = "Not started yet"
+        }else if (states.stage_<=2n) {
+            stateString = "Buy NOW"
+        }else{
+            stateString = "Closed"
+        }
+    }else{
+        return ''
+    }
+    return <div 
+        style={{backgroundColor: "var(--theme)"}}
+        className={styles.normal+' '+styles.ribbon}>
+        {Array(10).fill(0).map(_=><span>{stateString}</span>)}
+    </div>
+}
 export default SinglePool
