@@ -74,8 +74,10 @@ const Platform : FC<PlatformGuard> = ({isArchiveOpen, setIsArchiveOpen}) => {
                 }
             </section>
             <section className={styles.pagination}>
-                <div onClick={()=>setIsArchiveOpen(prev=>!prev)}>
-                    Legacy pools {isArchiveOpen}
+                <div
+                    className={styles.archives} 
+                    onClick={()=>setIsArchiveOpen(prev=>!prev)}>
+                    Archived pools
                 </div>
                 <div className={styles.dots}>
                     { pools?.length ? pools.map((address, index)=> 
