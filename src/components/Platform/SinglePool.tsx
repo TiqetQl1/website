@@ -10,6 +10,8 @@ import Bar from "./Components/Bar"
 import Buy from "./Components/Buy"
 import ConnectedWalletContext from "@/Contexts/ConnectedWalletContext"
 import Winners from "./Components/Winners"
+import Skeleton from "react-loading-skeleton"
+import Countdown from "./Components/Countdown"
 
 interface SinglePoolGuard {
     pool_address: string,
@@ -108,7 +110,11 @@ const SinglePool
             </div>
             {/* Buy button */}
             {
-                ((states?.stage_ == 1n)
+                ((states==null)
+                ? <Skeleton className={styles.big} width={200}/>
+                :((states.stage_ <= 0n)
+                ? <CountToStart configs={configs} />
+                :((states.stage_ <= 1n)
                 ? <Buy 
                     myTickets = {myTickets}
                     configs   = {configs}
@@ -117,15 +123,45 @@ const SinglePool
                     toBuy     = {toBuy}
                     setToBuy  = {setToBuy}
                     handler   = {buyHandler}/>
-                : (
-                states?.stage_ == 5n
-                    ? <Winners configs={configs} results={results}/>
-                : ''))
+                : <Winners configs={configs} results={results}/>
+                )))
             }
             {/* Address */}
             <Address pool_address={pool_address} />
         </div>
     )
+}
+
+type CountToStartGuard = {
+    configs: Configs,
+}
+const CountToStart : FC<CountToStartGuard> = ({configs}) => {
+    let now = Math.floor(Date.now()/1000)
+
+    return <div className={styles.flex}>
+        <div 
+            className={styles.big}
+            style={{color:"var(--yellow)"}}>
+            {
+                BigInt(now) > configs.time_end
+                    ? <>
+                        <span>00</span>
+                        <i>:</i>
+                        <span>00</span>
+                        <i>:</i>
+                        <span>00</span>
+                    </>
+                    : <Countdown 
+                        end={parseInt(configs.time_end.toString())}/>
+            }
+        </div>
+        <span>
+            &nbsp;
+        </span>
+        <div className={styles.normal}>
+            to start
+        </div>
+    </div>
 }
 
 type AddressGuard = {pool_address: string}
@@ -157,7 +193,7 @@ const Ribbon : FC<RibbonGuard> = ({states}) => {
         }else if (states.stage_<=2n) {
             stateString = "Buy NOW"
         }else{
-            stateString = "Closed"
+            stateString = "Has ended !"
         }
     }else{
         return ''

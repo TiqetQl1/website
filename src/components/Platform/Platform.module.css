@@ -93,6 +93,9 @@ input[type=number] {
 .color *{
     color: var(--theme);
 }
+.big *{
+    color: inherit;
+}
 /** Ribbon **/
 .ribbon{
     position: absolute;
