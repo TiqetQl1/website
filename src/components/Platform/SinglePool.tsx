@@ -73,6 +73,11 @@ const SinglePool
     if(isLoadingConfigs && !(configs?.organizer)) 
         return <SinglePoolSkeleton />
 
+    const singlePoolClass = 
+        (!states?.stage_||states.stage_==0n) 
+            ? styles.notActive
+            : ( states.stage_==1n ? styles.active : styles.finished )
+
     return (
         <div className={
                 styles.singlePool+' '+
