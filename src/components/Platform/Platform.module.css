@@ -35,7 +35,7 @@ input[type=number] {
     --theme: var(--yellow);
 }
 .singlePool.finished{
-    --theme: var(--yellow);
+    --theme: var(--green);
 }
 @media only screen and (min-width : 700px){
     .singlePool{

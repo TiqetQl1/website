@@ -82,8 +82,7 @@ const SinglePool
 
     return (
         <div className={
-                styles.singlePool+' '+
-                (states?.stage_==1n ? styles.active : '')}>
+                styles.singlePool+' '+singlePoolClass}>
             <Ribbon states={states} />
             {/* Total raised money w/ remaining time */}
             <Header 
