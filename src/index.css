@@ -11,7 +11,8 @@ html, body, #root{
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #213547;
+  --black: #231F20;
+  color: var(--black);
   background-color: var(--background);
 
   font-synthesis: none;
@@ -58,14 +59,16 @@ body {
   min-width: 320px;
   min-height: 100vh; 
   background: rgb(191,191,191);
-  background: radial-gradient(circle, rgba(191,191,191,1) 10%, rgba(236,236,236,1) 50%, rgba(242,242,247,1) 75%, rgba(242,242,247,1) 100%); 
+  background: radial-gradient(circle at 50% 0%, rgba(191,191,191,1) 15%, rgba(236,236,236,1) 60%, rgba(242,242,247,1) 85%, rgba(242,242,247,1) 100%); 
   padding-bottom: 80px;
+  box-sizing: border-box;
+  transition: all 200ms;
 }
 
 @media only screen and (max-width : 600px) {
   body{
-    background: rgb(191,191,191);
-    background: linear-gradient(180deg, rgba(191,191,191,1) 10%, rgba(236,236,236,1) 75%, rgba(242,242,247,1) 90%, rgba(242,242,247,1) 100%);  
+    /* background: rgb(191,191,191); */
+  /* background: linear-gradient(180deg, rgba(191,191,191,1) 10%, rgba(236,236,236,1) 75%, rgba(242,242,247,1) 90%, rgba(242,242,247,1) 100%);   */
   }
 }
 
