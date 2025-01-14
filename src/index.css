@@ -5,6 +5,9 @@ html, body, #root{
 *{
   color: #213547;
 }
+.slick-slide>div{
+  width: 100vw!important;
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
