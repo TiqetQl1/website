@@ -14,7 +14,7 @@ input[type=number] {
 }
 
 .platform{
-    margin: 40px auto;
+    margin: auto;
 }
 
 .singlePool{
@@ -420,7 +420,7 @@ del::after{
 .pagination{
     display: flex;
     max-width: var(--max-width);
-    margin: auto;
+    margin: 20px auto;
     width: 100%;
     justify-content: center;
 }
