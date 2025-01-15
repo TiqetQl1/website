@@ -1,0 +1,65 @@
+.loading svg{
+    height: 300px;
+    width: auto;
+    margin-top: 100px;
+}
+
+.loading svg path{
+    --delay: 300ms;
+    stroke-dasharray: 10%;
+    animation: strokeAnimate 5s ease-in-out infinite;
+    stroke-width: 2;
+    fill: none;
+    stroke: white;
+    stroke-linecap: round ;
+    stroke-linejoin: round;
+}
+.loading svg :global(.letter-TS){
+    --total-primeter: 305%;
+    stroke-dasharray: calc(var(--total-primeter) * 1);
+    stroke-dashoffset: calc(var(--total-primeter) * 0);
+    animation-delay: calc(1 * var(--delay));
+}
+.loading svg :global(.letter-I){
+    --total-primeter: 62%;
+    stroke-dasharray: var(--total-primeter);
+    animation-delay: calc(2 * var(--delay));
+}
+.loading svg :global(.letter-Q *){
+    --total-primeter: 155%;
+    stroke-dasharray: var(--total-primeter);
+    animation-delay: calc(3 * var(--delay));
+}
+.loading svg :global(.letter-E){
+    --total-primeter: 110%;
+    stroke-dasharray: var(--total-primeter);
+    animation-delay: calc(4 * var(--delay));
+}
+.loading svg :global(.letter-TE){
+    --total-primeter: 305%;
+    stroke-dasharray: var(--total-primeter);
+    animation-delay: calc(5 * var(--delay));
+}
+
+@keyframes strokeAnimate{
+    0%{
+        stroke-dasharray: calc(var(--total-primeter) * 1);
+        stroke-dashoffset: calc(var(--total-primeter) * 0);
+    }
+    30%{
+        stroke-dasharray: calc(var(--total-primeter) * 0.5);
+        stroke-dashoffset: calc(var(--total-primeter) * 1);
+    }
+    40%{
+        stroke-dasharray: calc(var(--total-primeter) * 1);
+        stroke-dashoffset: calc(var(--total-primeter) * 2);
+    }
+    70%{
+        stroke-dasharray: calc(var(--total-primeter) * 2);
+        stroke-dashoffset: calc(var(--total-primeter) * 1);
+    }
+    100%{
+        stroke-dasharray: calc(var(--total-primeter) * 2);
+        stroke-dashoffset: calc(var(--total-primeter) * 1);
+    }
+}
