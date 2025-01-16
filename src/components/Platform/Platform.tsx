@@ -1,5 +1,5 @@
 import styles from "./Platform.module.css"
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react"
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react"
 import SinglePool from "./SinglePool"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
@@ -31,11 +31,24 @@ const Platform : FC<PlatformGuard> = ({isArchiveOpen, setIsArchiveOpen}) => {
         beforeChange: (_now, next)=>setSlide(next)
       };
 
+    useEffect(()=>{
+        const ele = document.getElementById("preloading")
+        if (isLoading || !ele) {
+            return
+        }
+        if (pools!=null) {
+            ele.classList.add("done")
+        }
+        setTimeout(()=>{
+            ele.remove()
+        }, 2000)
+    },[isLoading])
+
     return (
         <>
             <section className={styles.platform}>
                 {
-                    pools?.length 
+                    pools!=null 
                         ? <Slider 
                             {...settings} 
                             className={styles.slick} 
