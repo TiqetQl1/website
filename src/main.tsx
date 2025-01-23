@@ -4,7 +4,7 @@ import App from './App'
 import "./assets/fonts/quicksand/quicksand.css"
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('tiqetroot')!).render(
   // <React.StrictMode>
     <App />
   // </React.StrictMode>,
