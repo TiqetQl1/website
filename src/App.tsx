@@ -6,6 +6,7 @@ import WalletListContext from './Contexts/WalletListContext'
 import ConnectedWalletContext from './Contexts/ConnectedWalletContext'
 import ActiveAccountContext from './Contexts/ActiveAccountContext'
 import Archive from './components/Archive/Archive'
+import Minter from './components/Minter'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Archive
         isArchiveOpen={isArchiveOpen}
         setIsArchiveOpen={setIsArchiveOpen}/>
+      <Minter />
     </WalletListContext.Provider>
     </ActiveAccountContext.Provider>
     </ConnectedWalletContext.Provider>
