@@ -7,6 +7,7 @@ import ConnectedWalletContext from './Contexts/ConnectedWalletContext'
 import ActiveAccountContext from './Contexts/ActiveAccountContext'
 import Archive from './components/Archive/Archive'
 import Minter from './components/Minter'
+import Footer from './components/Footer/Footer'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         isArchiveOpen={isArchiveOpen}
         setIsArchiveOpen={setIsArchiveOpen}/>
       <Minter />
+      <Footer />
     </WalletListContext.Provider>
     </ActiveAccountContext.Provider>
     </ConnectedWalletContext.Provider>
