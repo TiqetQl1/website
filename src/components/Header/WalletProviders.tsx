@@ -4,6 +4,10 @@ export const DiscoverWalletProviders = ({setSelectedWallet,setUserAccount}) => {
   const providers = useSyncProviders()
 
   const handleConnect = async (providerWithInfo: EIP6963ProviderDetail) => {
+    if (!providerWithInfo?.provider) {
+      console.warn("wallet not valid")
+      return
+    }
     const accounts: string[] | undefined =
       await (
         providerWithInfo.provider
@@ -19,41 +23,28 @@ export const DiscoverWalletProviders = ({setSelectedWallet,setUserAccount}) => {
     }
   }
 
+  const useInjectedProvider : ()=>EIP6963ProviderDetail = () => {
+    const tmp : EIP6963ProviderDetail = {
+      info: {
+        name:"injectedProvider",
+        walletId: "0", uuid: "0", icon: ""
+      },
+      provider: (window as any).ethereum
+    }
+    return tmp
+  }
+
   return (
     <>
-      {
-        providers.length > 0
-        ? 
-          <>
-          {providers?.map((provider: EIP6963ProviderDetail) => (
-            <button key={provider.info.uuid} onClick={() => handleConnect(provider)} >
-              <img src={provider.info.icon} alt={provider.info.name} />
-              <div>{provider.info.name}</div>
-            </button>
-          )) }
-          {/* {providers?.map((provider: EIP6963ProviderDetail) => (
-            <button key={provider.info.uuid} onClick={() => handleConnect(provider)} >
-              <img src={provider.info.icon} alt={provider.info.name} />
-              <div>{provider.info.name}</div>
-            </button>
-          )) }
-          {providers?.map((provider: EIP6963ProviderDetail) => (
-            <button key={provider.info.uuid} onClick={() => handleConnect(provider)} >
-              <img src={provider.info.icon} alt={provider.info.name} />
-              <div>{provider.info.name}</div>
-            </button>
-          )) } */}
-          </>
-        :
-          <div>
-            <h4>
-              No wallets found
-            </h4>
-            <p style={{textAlign: "left"}}>
-              Please make sure you have wallets installed on this browser or open this page from a wallet's app
-            </p>
-          </div>
-      }
+      <button onClick={()=>handleConnect(useInjectedProvider())}>
+        <div>Injected Provider</div>
+      </button>
+      {providers?.map((provider: EIP6963ProviderDetail) => (
+        <button key={provider.info.uuid} onClick={() => handleConnect(provider)} >
+          <img src={provider.info.icon} alt={provider.info.name} />
+          <div>{provider.info.name}</div>
+        </button>
+        )) }
     </>
   )
 }
