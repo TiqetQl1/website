@@ -66,6 +66,7 @@ body {
   padding-bottom: 80px;
   box-sizing: border-box;
   transition: all 200ms;
+  position: relative;
 }
 
 @media only screen and (max-width : 600px) {
