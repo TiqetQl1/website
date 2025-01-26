@@ -151,7 +151,7 @@ const CountToStart : FC<CountToStartGuard> = ({configs}) => {
                         <span>00</span>
                     </>
                     : <Countdown 
-                        end={parseInt(configs.time_end.toString())}/>
+                        end={parseInt(configs.time_start.toString())}/>
             }
         </div>
         <span>
