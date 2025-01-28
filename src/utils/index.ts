@@ -79,7 +79,16 @@ export const bigIntToFixed = (value: bigint, decimals: number): string => {
   const padded = strValue.padStart(decimals + 1, "0"); // Add leading zeros if necessary
   const whole = padded.slice(0, -decimals); // Whole part
   const fractional = padded.slice(-decimals); // Fractional part
-  return `${whole}.${fractional}`;
+  let res = `${whole}.${fractional}`
+  let i=res.length-1
+  while (res[i]=='0') {
+    res = res.slice(0,-1)
+    i-=1
+  }
+  if (res[i]=='.') {
+    res = res.slice(0,-1)
+  }
+  return res;
 }
 
 export const copyToClip = (copyText) => {
