@@ -91,18 +91,48 @@ export const bigIntToFixed = (value: bigint, decimals: number): string => {
   return res;
 }
 
+// Copy to clipboard is implemented from this stackoverflow answer
+// https://stackoverflow.com/a/30810322/17329401
+function fallbackCopyTextToClipboard(text) {
+  var textArea = document.createElement("textarea")
+  textArea.style.position = 'fixed'
+  textArea.style.top = "0"
+  textArea.style.left = "0"
+  textArea.style.width = '2em'
+  textArea.style.height = '2em'
+  textArea.style.padding = "0"
+  textArea.style.border = 'none'
+  textArea.style.outline = 'none'
+  textArea.style.boxShadow = 'none'
+  textArea.style.background = 'transparent'
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log(`copied ${text}`);
+  } catch (err) {
+    console.warn(err);
+  }
+
+  document.body.removeChild(textArea);
+}
 export const copyToClip = (copyText) => {
-  navigator.permissions.query({ name: "clipboard-write" as PermissionName  }).then((result) => {
-    if (result.state === "granted" || result.state === "prompt") {
-      navigator.clipboard.writeText(copyText).then(
-        () => {
-          /* clipboard successfully set */
-        },
-        (err) => {
-          /* clipboard write failed */
-          console.warn("Error on writing to clip board : ",err)
-        },
-      );
-    }
-  });
+  if (!navigator.clipboard) {
+    // Legacy method (third)
+    fallbackCopyTextToClipboard(copyText);
+    return;
+  }
+  // First method
+  navigator.clipboard.writeText(copyText).then(
+    () => {
+      /* clipboard successfully set */
+    },
+    (err) => {
+      // Second method
+      window.prompt("The full text to copy : ", copyText);
+    },
+  )
 }
