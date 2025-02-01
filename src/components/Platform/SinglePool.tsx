@@ -142,7 +142,7 @@ const CountToStart : FC<CountToStartGuard> = ({configs}) => {
             className={styles.big}
             style={{color:"var(--yellow)"}}>
             {
-                BigInt(now) > configs.time_end
+                BigInt(now) > configs.time_start
                     ? <>
                         <span>00</span>
                         <i>:</i>
