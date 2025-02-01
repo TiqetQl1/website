@@ -8,6 +8,7 @@ import ActiveAccountContext from './Contexts/ActiveAccountContext'
 import Archive from './components/Archive/Archive'
 import Minter from './components/Minter'
 import Footer from './components/Footer/Footer'
+import Text from './components/Text/Text'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       <Archive
         isArchiveOpen={isArchiveOpen}
         setIsArchiveOpen={setIsArchiveOpen}/>
+      <Text />
       <Minter />
       <Footer />
     </WalletListContext.Provider>

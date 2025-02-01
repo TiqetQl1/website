@@ -1,0 +1,10 @@
+.sec{
+    background-color: var(--background-secondary);
+}
+.p{
+    max-width: var(--max-width);
+    margin: auto;
+    text-align: justify;
+    direction: ltr;
+    padding: 12px 16px;
+}
