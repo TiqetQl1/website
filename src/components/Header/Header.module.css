@@ -67,6 +67,8 @@ header{
 .selectToggle{
     text-align: center;
     width: 8em;
+    position: absolute;
+    right: 24px;
 }
 .selectWalletList{
     background-color: var(--background-secondary);

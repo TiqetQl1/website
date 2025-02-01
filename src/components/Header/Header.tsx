@@ -30,6 +30,7 @@ const Header : FC = () => {
     }
 
     const ToggleWalletList = ()=>setIsOpen(prev=>!prev)
+    const isSmall : boolean = ((windowsSize?.width)<widthBreakpoint)
 
     useEffect(()=>{
         if (userAccount) {
@@ -40,7 +41,7 @@ const Header : FC = () => {
     return (
         <header>
             <nav className={styles.top}>
-                <h1 className={(windowsSize?.width<widthBreakpoint)?styles.small:''}>
+                <h1 className={isSmall?styles.small:''}>
                     <TiQetLogo/>
                 </h1>
                 {userAccount

@@ -59,7 +59,6 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  min-width: 320px;
   min-height: 100vh; 
   background: rgb(191,191,191);
   background: radial-gradient(circle at 50% 0%, rgba(191,191,191,1) 15%, rgba(236,236,236,1) 60%, rgba(242,242,247,1) 85%, rgba(242,242,247,1) 100%); 
