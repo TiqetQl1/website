@@ -6,5 +6,14 @@
     margin: auto;
     text-align: justify;
     direction: ltr;
-    padding: 12px 16px;
+    padding: 24px 16px;
+}
+.p >*:last-child{
+    text-align: center;
+    font-size : 1.2em;
+    min-width: 30px;
+    width: 100%;
+}
+.p >*:last-child b{
+    color: var(--green);
 }
