@@ -13,7 +13,7 @@ const Footer : FC = () => {
                 White paper
             </a>
             <ul className="socials">
-                {socials.map(item=><ASocialLink item={item}/>)}
+                {socials.map(item=><ASocialLink key={item.url} item={item}/>)}
             </ul>
         </div>
     </footer>

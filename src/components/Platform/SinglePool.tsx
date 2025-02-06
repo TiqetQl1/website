@@ -200,7 +200,7 @@ const Ribbon : FC<RibbonGuard> = ({states}) => {
     return <div 
         style={{backgroundColor: "var(--theme)"}}
         className={styles.normal+' '+styles.ribbon}>
-        {Array(10).fill(0).map(_=><span>{stateString}</span>)}
+        {Array(10).fill(0).map((_,i)=><span key={i}>{stateString}</span>)}
     </div>
 }
 export default SinglePool
