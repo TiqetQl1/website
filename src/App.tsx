@@ -9,6 +9,7 @@ import Archive from './components/Archive/Archive'
 import Minter from './components/Minter'
 import Footer from './components/Footer/Footer'
 import Text from './components/Text/Text'
+import { ThirdwebProvider } from 'thirdweb/react'
 
 
 function App() {
@@ -33,7 +34,9 @@ function App() {
         isArchiveOpen={isArchiveOpen}
         setIsArchiveOpen={setIsArchiveOpen}/>
       <Text />
-      <Minter />
+      <ThirdwebProvider>
+        <Minter />
+      </ThirdwebProvider>
       <Footer />
     </WalletListContext.Provider>
     </ActiveAccountContext.Provider>
