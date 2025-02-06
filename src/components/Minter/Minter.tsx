@@ -10,7 +10,7 @@ const Minter : FC = () => {
     const activeAccount = useActiveAccount();
 
     const CLIENT_ID            = "00e5dd19d3563fc84fbb7f6d2bd54f98"
-    const NFT_CONTRACT_ADDRESS = "0x6E9669b3973B96Cfa935101A28eb6411660Aa297"
+    const NFT_CONTRACT_ADDRESS = "0x01c6acBC7E8DBD0a2256d0a769d046Cec92E248C"
     
     
     const client = createThirdwebClient({
