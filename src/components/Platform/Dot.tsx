@@ -6,15 +6,20 @@ import { FC, useEffect, useState } from "react"
 type DotGuard = {
     pool: Pool,
     isActive: boolean,
-    clickHandler: ()=>{}
+    setAsCurrent: ()=>{}
 }
 
-const Dot : FC<DotGuard> = ({pool , isActive, clickHandler}) => {
+const Dot : FC<DotGuard> = ({pool , isActive, setAsCurrent}) => {
     const [states, isLoading, retry] = useData<States>(pool.states, 5)
+    const [movedOnce, setMovedOnce] = useState<boolean>(false)
 
     useEffect(()=>{
         if (!isLoading && !(states?.stage_)) {
             setTimeout(retry, 10000)
+        }
+        if (!movedOnce && states?.stage_ && (states.stage_==1n)){
+            setMovedOnce(true)
+            setAsCurrent()
         }
     },[isLoading])
 
@@ -27,7 +32,7 @@ const Dot : FC<DotGuard> = ({pool , isActive, clickHandler}) => {
     return (
         <div
             className={isActive?"active":undefined}
-            onClick={clickHandler}>
+            onClick={setAsCurrent}>
             <i style={{transform:transform, backgroundColor:backgroundColor}}>
                 &nbsp;
             </i>

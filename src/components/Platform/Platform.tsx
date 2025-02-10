@@ -100,7 +100,7 @@ const Platform : FC<PlatformGuard> = ({isArchiveOpen, setIsArchiveOpen}) => {
                                 key={index}
                                 pool={pool} 
                                 isActive={slide===index}
-                                clickHandler={()=>sliderRef.current.slickGoTo(index)}/>
+                                setAsCurrent={()=>sliderRef.current.slickGoTo(index)}/>
                         }
                     )
                     : (isLoading ? "Loading ..." : "Err !")}
