@@ -6,10 +6,8 @@ import WalletListContext from './Contexts/WalletListContext'
 import ConnectedWalletContext from './Contexts/ConnectedWalletContext'
 import ActiveAccountContext from './Contexts/ActiveAccountContext'
 import Archive from './components/Archive/Archive'
-import Minter from './components/Minter/Minter'
 import Footer from './components/Footer/Footer'
 import Text from './components/Text/Text'
-import { ThirdwebProvider } from 'thirdweb/react'
 
 
 function App() {
@@ -34,9 +32,6 @@ function App() {
         isArchiveOpen={isArchiveOpen}
         setIsArchiveOpen={setIsArchiveOpen}/>
       <Text />
-      <ThirdwebProvider>
-        <Minter />
-      </ThirdwebProvider>
       <Footer />
     </WalletListContext.Provider>
     </ActiveAccountContext.Provider>
